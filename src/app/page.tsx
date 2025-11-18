@@ -206,25 +206,40 @@ export default function SamuelPoncePortfolio() {
       <div className="fixed top-0 left-0 right-0 z-50">
         <div className="mx-auto max-w-6xl px-4 py-3">
           <div className="flex items-center justify-between rounded-full border border-border bg-background/70 backdrop-blur px-3 py-2">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuLink href="#proyectos" className="px-3 py-2">
-                    {DICT[lang].navProjects}
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink href="#skills" className="px-3 py-2">
-                    {DICT[lang].navSkills}
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink href="#contacto" className="px-3 py-2">
-                    {DICT[lang].navContact}
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            {/* Brand + Nav */}
+            <div className="flex items-center gap-3">
+              <a href="#" aria-label="Home" className="group flex items-center gap-2 rounded-full px-2 py-1">
+                <span className="relative inline-flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                <span className="font-semibold tracking-tight">
+                  <span className="text-primary">Samuel</span> Ponce Luna
+                </span>
+              </a>
+              <div className="hidden md:block">
+                <NavigationMenu>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuLink href="#proyectos" className="px-3 py-2">
+                        {DICT[lang].navProjects}
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                      <NavigationMenuLink href="#skills" className="px-3 py-2">
+                        {DICT[lang].navSkills}
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                      <NavigationMenuLink href="#contacto" className="px-3 py-2">
+                        {DICT[lang].navContact}
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </div>
+            </div>
+            {/* Toggles */}
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
