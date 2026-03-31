@@ -2,8 +2,8 @@ export type Lang = "es" | "en";
 
 export const DICT = {
   es: {
-    role: "Backend developer",
-    desc: "5 años de experiencia. Trabajo con Python, Node.js, PostgreSQL y Redis en el backend, y React, Next.js y Tailwind cuando toca frontend.",
+    role: "Programador backend en Las Palmas de Gran Canaria",
+    desc: "5 anos de experiencia. Trabajo con Python, Node.js, PostgreSQL y Redis en backend, y React, Next.js y Tailwind en frontend cuando el proyecto lo necesita.",
     sProjects: "proyectos",
     sExperience: "experiencia",
     sStack: "stack",
@@ -12,7 +12,7 @@ export const DICT = {
     tagWip: "wip",
   },
   en: {
-    role: "Backend developer",
+    role: "Backend developer based in Las Palmas de Gran Canaria",
     desc: "5 years of experience. I work with Python, Node.js, PostgreSQL and Redis on the backend, and React, Next.js and Tailwind on the frontend when needed.",
     sProjects: "projects",
     sExperience: "experience",

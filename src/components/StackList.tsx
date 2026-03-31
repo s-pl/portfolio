@@ -1,9 +1,43 @@
 import SectionLabel from "./SectionLabel";
 import { STACK } from "@/lib/data";
+import {
+  Braces,
+  Code2,
+  Container,
+  Database,
+  Flame,
+  GitBranch,
+  Globe,
+  Layers,
+  Server,
+  Workflow,
+  type LucideIcon,
+} from "lucide-react";
 
 interface Props {
   label: string;
 }
+
+const TECH_ICONS: Record<string, LucideIcon> = {
+  Python: Code2,
+  "Node.js": Server,
+  Express: Workflow,
+  "REST APIs": Globe,
+  PostgreSQL: Database,
+  Redis: Database,
+  SQLite: Database,
+  MongoDB: Database,
+  React: Braces,
+  "Next.js": Layers,
+  TypeScript: Code2,
+  "Tailwind CSS": Flame,
+  JavaScript: Code2,
+  Linux: Server,
+  Git: GitBranch,
+  Docker: Container,
+  Vercel: Globe,
+  Firebase: Database,
+};
 
 export default function StackList({ label }: Props) {
   return (
@@ -17,9 +51,19 @@ export default function StackList({ label }: Props) {
             </span>
             <div className="flex flex-wrap gap-2">
               {items.map((item) => (
-                <span key={item} className="font-mono text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
-                  {item}
-                </span>
+                (() => {
+                  const Icon = TECH_ICONS[item] ?? Code2;
+
+                  return (
+                    <span
+                      key={item}
+                      className="font-mono text-xs bg-muted text-muted-foreground px-2 py-1 rounded inline-flex items-center gap-1.5"
+                    >
+                      <Icon size={12} className="shrink-0" />
+                      {item}
+                    </span>
+                  );
+                })()
               ))}
             </div>
           </div>
