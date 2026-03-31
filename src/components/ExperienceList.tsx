@@ -37,6 +37,28 @@ export default function ExperienceList({ experience, label }: Props) {
                 {exp.company} · {exp.period}
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">{exp.desc}</p>
+              {exp.highlights && exp.highlights.length > 0 && (
+                <ul className="mt-2 space-y-1">
+                  {exp.highlights.map((h) => (
+                    <li key={h} className="flex gap-2 text-sm text-muted-foreground">
+                      <span className="text-emerald-400 shrink-0 mt-0.5">›</span>
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {exp.tech && exp.tech.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {exp.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="font-mono text-xs text-muted-foreground/60 border border-border rounded px-1.5 py-0.5"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </motion.div>
         ))}

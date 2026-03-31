@@ -13,6 +13,8 @@ export interface Experience {
   company: string;
   period: string;
   desc: string;
+  highlights?: string[];
+  tech?: string[];
   tag?: string;
 }
 
@@ -81,7 +83,15 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
       role: "Backend Developer Intern",
       company: "C-Link · Londres, Reino Unido",
       period: "2026 — presente",
-      desc: "Prácticas Erasmus de 3 meses en el departamento de IA. Enfocado en desarrollo backend para sistemas de inteligencia artificial.",
+      desc: "Prácticas Erasmus en el departamento de IA de una startup de construcción con IA para el análisis de licitaciones.",
+      highlights: [
+        "Integré New Relic APM en la API de producción (sustituyendo Sentry para monitorización de rendimiento)",
+        "Desarrollé soporte de addendums en el pipeline de análisis de licitaciones con IA (Python, Celery, S3)",
+        "Rediseñé el flujo de subida de archivos con gestión de subcontratistas y PDF preview (React)",
+        "Mejoré la fiabilidad del worker Celery con late ACK para tareas atascadas tras despliegues",
+        "Implementé modelos, enums y migraciones para el nuevo módulo de análisis BOQ",
+      ],
+      tech: ["Python", "FastAPI", "Celery", "PostgreSQL", "React", "S3", "New Relic", "Docker"],
       tag: "erasmus",
     },
     {
@@ -96,7 +106,15 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
       role: "Backend Developer Intern",
       company: "C-Link · London, UK",
       period: "2026 — present",
-      desc: "3-month Erasmus placement in the AI department. Focused on backend development for artificial intelligence systems.",
+      desc: "Erasmus placement at an AI-powered construction startup building tools for tender analysis.",
+      highlights: [
+        "Integrated New Relic APM into the production API (replacing Sentry for performance monitoring)",
+        "Built addendum support for the AI tender analysis pipeline (Python, Celery, S3)",
+        "Redesigned the file upload flow with subcontractor management and PDF preview (React)",
+        "Improved Celery worker reliability with late ACK handling for stuck tasks after deployments",
+        "Implemented models, enums and migrations for the new BOQ analysis module",
+      ],
+      tech: ["Python", "FastAPI", "Celery", "PostgreSQL", "React", "S3", "New Relic", "Docker"],
       tag: "erasmus",
     },
     {
