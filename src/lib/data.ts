@@ -20,7 +20,7 @@ export const PROJECTS: Record<Lang, Project[]> = {
   es: [
     {
       title: "envshare",
-      desc: "Comparte variables de entorno de forma segura mediante links cifrados de un solo uso.",
+      desc: "Comparte variables de entorno de forma segura mediante CLI ",
       tech: ["Next.js", "TypeScript", "Redis"],
       href: "https://github.com/s-pl/envshare",
       tag: "new",
@@ -48,7 +48,7 @@ export const PROJECTS: Record<Lang, Project[]> = {
   en: [
     {
       title: "envshare",
-      desc: "Share environment variables securely via encrypted one-time links.",
+      desc: "Share environment variables securely via CLI ",
       tech: ["Next.js", "TypeScript", "Redis"],
       href: "https://github.com/s-pl/envshare",
       tag: "new",
