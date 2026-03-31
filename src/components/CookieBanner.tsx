@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Check, Cookie, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -123,6 +124,7 @@ export default function CookieBanner({ lang }: Props) {
   const [visible, setVisible] = useState(false);
   const [consent, setConsent] = useState<ConsentDecision | null>(null);
   const [pendingDecision, setPendingDecision] = useState<ConsentDecision | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const decision = getStoredConsent();
@@ -138,6 +140,18 @@ export default function CookieBanner({ lang }: Props) {
   }, []);
 
   const copy = useMemo(() => COPY[lang], [lang]);
+
+  const panelAnimation = shouldReduceMotion
+    ? {
+        initial: { opacity: 1, scale: 1, y: 0 },
+        animate: { opacity: 1, scale: 1, y: 0 },
+        exit: { opacity: 1, scale: 1, y: 0 },
+      }
+    : {
+        initial: { opacity: 0, scale: 0.86, y: 16 },
+        animate: { opacity: 1, scale: 1, y: 0 },
+        exit: { opacity: 0, scale: 0.86, y: 16 },
+      };
 
   function handleDecision(decision: ConsentDecision) {
     setPendingDecision(decision);
@@ -155,20 +169,41 @@ export default function CookieBanner({ lang }: Props) {
 
   return (
     <>
-      {showManagerButton ? (
-        <Button
-          size="icon"
-          className="fixed bottom-4 right-4 z-50 rounded-full shadow-md"
-          aria-label={copy.manage}
-          onClick={() => setVisible(true)}
-        >
-          <Cookie />
-        </Button>
-      ) : null}
+      <AnimatePresence>
+        {showManagerButton ? (
+          <motion.div
+            key="cookie-manager"
+            className="fixed bottom-4 right-4 z-50"
+            initial={panelAnimation.initial}
+            animate={panelAnimation.animate}
+            exit={panelAnimation.exit}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.28 }}
+            style={{ transformOrigin: "bottom right" }}
+          >
+            <Button
+              size="icon"
+              className="rounded-full shadow-md"
+              aria-label={copy.manage}
+              onClick={() => setVisible(true)}
+            >
+              <Cookie />
+            </Button>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
-      {visible ? (
-        <div className="fixed bottom-4 right-4 z-50 w-[calc(100%-2rem)] sm:w-[30rem]">
-          <Card className="w-full border-border/80 shadow-lg backdrop-blur">
+      <AnimatePresence>
+        {visible ? (
+          <motion.div
+            key="cookie-panel"
+            className="fixed bottom-4 right-4 z-50 w-[calc(100%-2rem)] sm:w-[30rem]"
+            initial={panelAnimation.initial}
+            animate={panelAnimation.animate}
+            exit={panelAnimation.exit}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.28 }}
+            style={{ transformOrigin: "bottom right" }}
+          >
+            <Card className="w-full border-border/80 shadow-lg backdrop-blur">
             <CardHeader className="gap-2">
               <CardTitle className="flex items-center gap-2 text-base">
                 <Cookie className="size-4" />
@@ -244,9 +279,10 @@ export default function CookieBanner({ lang }: Props) {
                 </span>
               </Button>
             </CardFooter>
-          </Card>
-        </div>
-      ) : null}
+            </Card>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }
