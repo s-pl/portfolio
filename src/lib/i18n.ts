@@ -3,7 +3,7 @@ export type Lang = "es" | "en";
 export const DICT = {
   es: {
     role: "Desarrollador de software en Las Palmas de Gran Canaria",
-    desc: "5 anos de experiencia. Trabajo con Python, Node.js, PostgreSQL y Redis en backend, y React, Next.js y Tailwind en frontend cuando el proyecto lo necesita.",
+    desc: "5 años de experiencia. Trabajo con Python, Node.js, PostgreSQL y Redis en backend, y React, Next.js y Tailwind en frontend cuando el proyecto lo necesita.",
     ctaProjects: "Ver proyectos",
     ctaContact: "Contactar",
     sProjects: "proyectos",
