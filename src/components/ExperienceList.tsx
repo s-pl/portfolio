@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import SectionLabel from "./SectionLabel";
 import type { Experience } from "@/lib/data";
 
@@ -8,6 +8,8 @@ interface Props {
 }
 
 export default function ExperienceList({ experience, label }: Props) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="experience" className="py-12">
       <SectionLabel label={label} />
@@ -15,9 +17,9 @@ export default function ExperienceList({ experience, label }: Props) {
         {experience.map((exp, i) => (
           <motion.div
             key={exp.company}
-            initial={{ opacity: 0, y: 8 }}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.07 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.07 }}
             className="flex gap-6"
           >
             <div className="flex flex-col items-center">

@@ -12,6 +12,7 @@ import ProjectList from "@/components/ProjectList";
 import ExperienceList from "@/components/ExperienceList";
 import StackList from "@/components/StackList";
 import ContactList from "@/components/ContactList";
+import CookieBanner from "@/components/CookieBanner";
 
 const Divider = () => <div className="border-t border-border" />;
 
@@ -44,6 +45,8 @@ export default function Portfolio() {
           </p>
         </footer>
       </main>
+
+      <CookieBanner lang={lang} />
     </div>
   );
 }

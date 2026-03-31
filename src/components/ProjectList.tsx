@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import SectionLabel from "./SectionLabel";
 import type { Project } from "@/lib/data";
@@ -16,6 +16,8 @@ const tagStyles = {
 };
 
 export default function ProjectList({ projects, label, tagNew, tagWip }: Props) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="projects" className="py-12">
       <SectionLabel label={label} />
@@ -26,9 +28,9 @@ export default function ProjectList({ projects, label, tagNew, tagWip }: Props) 
             href={project.href}
             target="_blank"
             rel="noreferrer"
-            initial={{ opacity: 0, y: 8 }}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.07 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.07 }}
             className="group flex items-start gap-4 py-5 border-b border-border last:border-b-0 hover:bg-muted/20 -mx-3 px-3 rounded-sm transition-colors cursor-pointer"
           >
             <div className="flex-1 min-w-0">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,11 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://samuelponce.es"),
   title: {
-    default: "Samuel Ponce Luna | Programador en Las Palmas de Gran Canaria",
+    default: "Samuel Ponce Luna | Desarrollador de software en Las Palmas de Gran Canaria",
     template: "%s | Samuel Ponce Luna",
   },
   description:
-    "Programador backend y Node.js en Las Palmas de Gran Canaria. Portfolio de Samuel Ponce Luna con proyectos, experiencia y stack.",
+    "Desarrollador de software backend y Node.js en Las Palmas de Gran Canaria. Portfolio de Samuel Ponce Luna con proyectos, experiencia y stack.",
   keywords: [
     "programador las palmas de gran canaria",
     "samuel ponce",
@@ -38,15 +39,15 @@ export const metadata: Metadata = {
     locale: "es_ES",
     url: "https://samuelponce.es",
     siteName: "Samuel Ponce Luna",
-    title: "Samuel Ponce Luna | Programador en Las Palmas de Gran Canaria",
+    title: "Samuel Ponce Luna | Desarrollador de software en Las Palmas de Gran Canaria",
     description:
-      "Programador backend y Node.js en Las Palmas de Gran Canaria. Proyectos, experiencia y stack tecnológico.",
+      "Desarrollador de software backend y Node.js en Las Palmas de Gran Canaria. Proyectos, experiencia y stack tecnológico.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Samuel Ponce Luna | Programador en Las Palmas de Gran Canaria",
+    title: "Samuel Ponce Luna | Desarrollador de software en Las Palmas de Gran Canaria",
     description:
-      "Programador backend y Node.js en Las Palmas de Gran Canaria. Portfolio profesional.",
+      "Desarrollador de software backend y Node.js en Las Palmas de Gran Canaria. Portfolio profesional.",
   },
   robots: {
     index: true,
@@ -69,9 +70,9 @@ const jsonLd = {
       "@id": "https://samuelponce.es/#person",
       name: "Samuel Ponce Luna",
       url: "https://samuelponce.es",
-      jobTitle: "Programador Backend",
+      jobTitle: "Desarrollador de software",
       description:
-        "Programador backend y Node.js en Las Palmas de Gran Canaria.",
+        "Desarrollador de software backend y Node.js en Las Palmas de Gran Canaria.",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Las Palmas de Gran Canaria",
@@ -101,16 +102,53 @@ const jsonLd = {
   ],
 };
 
+const themeInitScript = `(() => {
+  try {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = savedTheme ? savedTheme === "dark" : prefersDark;
+    document.documentElement.classList.toggle("dark", isDark);
+  } catch {
+    document.documentElement.classList.add("dark");
+  }
+})();`;
+
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {gaId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-consent-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('consent', 'default', {
+                  analytics_storage: 'denied',
+                  ad_storage: 'denied',
+                  ad_user_data: 'denied',
+                  ad_personalization: 'denied'
+                });
+                gtag('js', new Date());
+                gtag('config', '${gaId}', { anonymize_ip: true });
+              `}
+            </Script>
+          </>
+        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
