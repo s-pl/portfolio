@@ -23,12 +23,12 @@ export default function ContactList({ label }: Props) {
             {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
             className="flex items-center gap-3 group w-fit"
           >
-            <Icon size={14} className="text-muted-foreground shrink-0" />
-            <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+            <Icon size={16} className="text-muted-foreground shrink-0" />
+            <span className="text-base text-muted-foreground group-hover:text-foreground transition-colors">
               {text}
             </span>
             <ArrowUpRight
-              size={12}
+              size={14}
               className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity"
             />
           </a>

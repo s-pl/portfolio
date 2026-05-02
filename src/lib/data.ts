@@ -16,26 +16,44 @@ export interface Experience {
   highlights?: string[];
   tech?: string[];
   tag?: string;
+  caseStudy?: {
+    title: string;
+    problem: string;
+    architecture: string;
+    decisions: string[];
+  };
+}
+
+export interface Education {
+  degree: string;
+  institution: string;
+  period?: string;
+  note?: string;
+}
+
+export interface Language {
+  name: string;
+  level: string;
 }
 
 export const PROJECTS: Record<Lang, Project[]> = {
   es: [
     {
       title: "envshare",
-      desc: "Comparte variables de entorno de forma segura mediante CLI ",
+      desc: "Herramienta web para distribuir variables de entorno entre equipos de forma segura: cifrado en tránsito, TTL por secreto y acceso de un solo uso.",
       tech: ["Next.js", "TypeScript", "Redis"],
       href: "https://github.com/s-pl/envshare",
       tag: "new",
     },
     {
       title: "EzPass",
-      desc: "Transferencia de archivos en tiempo real entre móvil y PC. Sin registro, sin instalación.",
+      desc: "Transferencia de archivos P2P en tiempo real entre dispositivos móvil y escritorio mediante WebSockets. Sin registro, sin instalación.",
       tech: ["Node.js", "Socket.io"],
       href: "https://github.com/s-pl/ezpass",
     },
     {
       title: "RobEurope",
-      desc: "Plataforma para una competición europea de robótica entre institutos. Backend y frontend en equipo.",
+      desc: "Plataforma fullstack para competición europea de robótica: autenticación JWT, API REST documentada con Swagger y panel de administración.",
       tech: ["Node.js", "Express", "MySQL", "React", "JWT", "Swagger"],
       href: "https://github.com/s-pl/RobEurope",
       tag: "wip",
@@ -50,20 +68,20 @@ export const PROJECTS: Record<Lang, Project[]> = {
   en: [
     {
       title: "envshare",
-      desc: "Share environment variables securely via CLI ",
+      desc: "Web tool for securely distributing environment variables across teams: in-transit encryption, per-secret TTL, and single-use access.",
       tech: ["Next.js", "TypeScript", "Redis"],
       href: "https://github.com/s-pl/envshare",
       tag: "new",
     },
     {
       title: "EzPass",
-      desc: "Real-time file transfer between phone and PC. No sign-up, no install.",
+      desc: "Real-time P2P file transfer between mobile and desktop devices over WebSockets. No sign-up, no install.",
       tech: ["Node.js", "Socket.io"],
       href: "https://github.com/s-pl/ezpass",
     },
     {
       title: "RobEurope",
-      desc: "Platform for a European robotics competition between high schools. Backend + frontend, team project.",
+      desc: "Full-stack platform for a European robotics competition: JWT authentication, Swagger-documented REST API, and admin dashboard.",
       tech: ["Node.js", "Express", "MySQL", "React", "JWT", "Swagger"],
       href: "https://github.com/s-pl/RobEurope",
       tag: "wip",
@@ -80,54 +98,116 @@ export const PROJECTS: Record<Lang, Project[]> = {
 export const EXPERIENCE: Record<Lang, Experience[]> = {
   es: [
     {
-      role: "Backend Developer Intern",
+      role: "Full Stack Developer Intern",
       company: "C-Link · Londres, Reino Unido",
-      period: "2026 — presente",
-      desc: "Prácticas Erasmus en el departamento de IA de una startup de construcción con IA para el análisis de licitaciones.",
+      period: "ene. 2026 – may. 2026",
+      desc: "Prácticas Erasmus en el departamento de IA de una startup de construcción con herramientas de análisis de licitaciones mediante LLMs.",
       highlights: [
-        "Integré New Relic APM en la API de producción (sustituyendo Sentry para monitorización de rendimiento)",
-        "Desarrollé soporte de addendums en el pipeline de análisis de licitaciones con IA (Python, Celery, S3)",
-        "Rediseñé el flujo de subida de archivos con gestión de subcontratistas y PDF preview (React)",
-        "Mejoré la fiabilidad del worker Celery con late ACK para tareas atascadas tras despliegues",
-        "Implementé modelos, enums y migraciones para el nuevo módulo de análisis BOQ",
+        "Sistema de contabilidad de coste y consumo de tokens LLM por tipo de análisis",
+        "Instrumentación de New Relic APM en producción: trazas distribuidas, métricas de rendimiento y alertas, junto a Sentry para errores",
+        "Refactor de la capa de ingesta: referencias externas a ficheros, procesamiento multi-documento y enriquecimiento de addendums",
+        "Corrección de condición de carrera en workers Celery mediante late acknowledgement; unificación del manejo de errores en la capa de tareas",
       ],
-      tech: ["Python", "FastAPI", "Celery", "PostgreSQL", "React", "S3", "New Relic", "Docker"],
+      tech: ["Python", "FastAPI", "Celery", "PostgreSQL", "React", "S3", "New Relic", "Sentry", "Docker"],
       tag: "erasmus",
+      caseStudy: {
+        title: "Módulo BOQ",
+        problem:
+          "Analizar Bills of Quantities en licitaciones de construcción para convertir documentación compleja en señales accionables dentro del flujo de C-Link.",
+        architecture:
+          "Esquema de base de datos y migraciones → API REST privada para integración con Nexus → pipeline Celery con múltiples modos de ejecución → suite de tests de integración.",
+        decisions: [
+          "Múltiples modos de ejecución para adaptar el análisis al estado y volumen de cada tender.",
+          "Contabilidad de tokens y coste LLM por tipo de análisis para medir consumo real.",
+          "Late ACK en Celery para evitar race conditions y conservar consistencia ante fallos de workers.",
+        ],
+      },
     },
     {
       role: "Desarrollador Web",
       company: "Astican · Las Palmas de Gran Canaria",
       period: "2025",
-      desc: "Prácticas laborales como desarrollador web. Desarrollo y mantenimiento de aplicaciones internas.",
+      desc: "Prácticas laborales como desarrollador web en empresa del sector naval.",
+      highlights: [
+        "Desarrollo y mantenimiento de aplicaciones internas para empresa del sector naval",
+        "Nuevas funcionalidades sobre stack existente y resolución de deuda técnica en módulos legacy",
+      ],
     },
   ],
   en: [
     {
-      role: "Backend Developer Intern",
+      role: "Full Stack Developer Intern",
       company: "C-Link · London, UK",
-      period: "2026 — present",
-      desc: "Erasmus placement at an AI-powered construction startup building tools for tender analysis.",
+      period: "Jan 2026 – May 2026",
+      desc: "Erasmus placement at an AI-powered construction startup building LLM tools for tender analysis.",
       highlights: [
-        "Integrated New Relic APM into the production API (replacing Sentry for performance monitoring)",
-        "Built addendum support for the AI tender analysis pipeline (Python, Celery, S3)",
-        "Redesigned the file upload flow with subcontractor management and PDF preview (React)",
-        "Improved Celery worker reliability with late ACK handling for stuck tasks after deployments",
-        "Implemented models, enums and migrations for the new BOQ analysis module",
+        "Built LLM cost and token-usage accounting system per analysis type",
+        "Instrumented New Relic APM in production: distributed traces, performance metrics and alerts, alongside Sentry for error tracking",
+        "Refactored the document ingestion layer: external file references, multi-document handling, and addendum enrichment",
+        "Fixed a race condition in Celery workers via late acknowledgement; unified error handling across the task layer",
       ],
-      tech: ["Python", "FastAPI", "Celery", "PostgreSQL", "React", "S3", "New Relic", "Docker"],
+      tech: ["Python", "FastAPI", "Celery", "PostgreSQL", "React", "S3", "New Relic", "Sentry", "Docker"],
       tag: "erasmus",
+      caseStudy: {
+        title: "BOQ module",
+        problem:
+          "Analyze Bills of Quantities in construction tenders to turn dense documentation into actionable signals inside C-Link's workflow.",
+        architecture:
+          "Database schema and migrations → private REST API for Nexus integration → Celery pipeline with multiple execution modes → integration test suite.",
+        decisions: [
+          "Multiple execution modes to adapt analysis to each tender's state and document volume.",
+          "LLM token and cost accounting by analysis type to measure real consumption.",
+          "Celery late ACK to avoid race conditions and preserve consistency when workers fail.",
+        ],
+      },
     },
     {
       role: "Web Developer",
       company: "Astican · Las Palmas de Gran Canaria",
       period: "2025",
-      desc: "Work placement as a web developer. Development and maintenance of internal applications.",
+      desc: "Work placement as a web developer at a shipyard company.",
+      highlights: [
+        "Development and maintenance of internal web applications for a shipyard company",
+        "Delivered new features on an existing stack and resolved technical debt in legacy modules",
+      ],
     },
   ],
 };
 
 export const STACK: Record<string, string[]> = {
-  backend: ["Python", "Node.js", "Express", "REST APIs", "PostgreSQL", "Redis", "SQLite", "MongoDB"],
-  frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "JavaScript"],
-  devops: ["Linux", "Git", "Docker", "Vercel", "Firebase"],
+  backend: ["Python", "Node.js", "FastAPI", "Flask", "Express", "Celery", "REST APIs"],
+  databases: ["PostgreSQL", "MySQL", "Redis", "MongoDB", "SQLite", "Firebase"],
+  frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "Framer Motion", "Zustand"],
+  devops: ["Docker", "Linux", "Git", "GitHub Actions", "Vercel", "New Relic APM", "Sentry"],
+  ai: ["Claude API", "Prompt Engineering", "LLM Pipelines"],
+};
+
+export const EDUCATION: Record<Lang, Education[]> = {
+  es: [
+    {
+      degree: "Técnico Superior en Desarrollo de Aplicaciones Web (DAW)",
+      institution: "IES El Rincón · Las Palmas de Gran Canaria",
+      period: "2023 – 2026",
+      note: "Erasmus en C-Link, Londres",
+    },
+  ],
+  en: [
+    {
+      degree: "Higher National Diploma in Web Application Development",
+      institution: "IES El Rincón · Las Palmas de Gran Canaria",
+      period: "2023 – 2026",
+      note: "Erasmus at C-Link, London",
+    },
+  ],
+};
+
+export const LANGUAGES: Record<Lang, Language[]> = {
+  es: [
+    { name: "Español", level: "Nativo" },
+    { name: "Inglés", level: "B2 — EOI" },
+  ],
+  en: [
+    { name: "Spanish", level: "Native" },
+    { name: "English", level: "B2 — EOI" },
+  ],
 };

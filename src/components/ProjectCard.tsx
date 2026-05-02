@@ -28,10 +28,10 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
           <Card className="rounded-2xl group-hover:shadow-md transition-shadow h-full">
             <CardContent className="p-6 flex flex-col h-full">
               <div className="flex-1">
-                <h3 className="text-lg font-semibold leading-tight group-hover:underline inline-flex items-center gap-2">
+                <h3 className="text-xl font-semibold leading-tight group-hover:underline inline-flex items-center gap-2">
                   {title} {href && <LinkIcon size={16} />}
                 </h3>
-                <p className="mt-2 text-sm text-muted-foreground">{desc}</p>
+                <p className="mt-2 text-base text-muted-foreground">{desc}</p>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 {tech.map((t) => (
@@ -48,10 +48,10 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
           <Card className="rounded-2xl group-hover:shadow-md transition-shadow h-full">
             <CardContent className="p-6 flex flex-col h-full">
               <div className="flex-1">
-                <h3 className="text-lg font-semibold leading-tight inline-flex items-center gap-2">
+                <h3 className="text-xl font-semibold leading-tight inline-flex items-center gap-2">
                   {title}
                 </h3>
-                <p className="mt-2 text-sm text-muted-foreground">{desc}</p>
+                <p className="mt-2 text-base text-muted-foreground">{desc}</p>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 {tech.map((t) => (

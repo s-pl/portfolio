@@ -35,17 +35,17 @@ export default function ProjectList({ projects, label, tagNew, tagWip }: Props) 
           >
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="font-mono text-sm font-semibold">{project.title}</span>
+                <span className="font-mono text-base font-semibold">{project.title}</span>
                 {project.tag && (
-                  <span className={`font-mono text-xs px-1.5 py-0.5 rounded border ${tagStyles[project.tag]}`}>
+                  <span className={`font-mono text-sm px-1.5 py-0.5 rounded border ${tagStyles[project.tag]}`}>
                     {project.tag === "new" ? tagNew : tagWip}
                   </span>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-3">{project.desc}</p>
+              <p className="text-base text-muted-foreground leading-relaxed mb-3">{project.desc}</p>
               <div className="flex flex-wrap gap-1.5">
                 {project.tech.map((tech) => (
-                  <span key={tech} className="font-mono text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">
+                  <span key={tech} className="font-mono text-sm text-muted-foreground bg-muted px-2 py-0.5 rounded">
                     {tech}
                   </span>
                 ))}

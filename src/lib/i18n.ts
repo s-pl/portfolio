@@ -5,10 +5,20 @@ export type CookieCopy = {
   summary: string;
   accept: string;
   reject: string;
+  close: string;
   manage: string;
   currentAccepted: string;
   currentRejected: string;
   mandatory: string;
+  technicalTitle: string;
+  technicalDescription: string;
+  technicalStatus: string;
+  analyticsTitle: string;
+  analyticsDescription: string;
+  analyticsStatusOn: string;
+  analyticsStatusOff: string;
+  analyticsStatusUnset: string;
+  detailsLabel: string;
   details: Array<{ id: string; label: string; content: string }>;
 };
 
@@ -19,10 +29,20 @@ export const COOKIE_COPY: Record<Lang, CookieCopy> = {
       "Utilizo cookies tecnicas para que la web funcione y, solo si aceptas, analitica de Vercel (Web Analytics y Speed Insights) para medir visitas, clics y mejorar contenido.",
     accept: "Aceptar analitica",
     reject: "Rechazar analitica",
+    close: "Cerrar preferencias",
     manage: "Gestionar cookies",
     currentAccepted: "Estado actual: analitica activada",
     currentRejected: "Estado actual: analitica desactivada",
     mandatory: "Las cookies tecnicas son necesarias y siempre estan activas.",
+    technicalTitle: "Tecnicas necesarias",
+    technicalDescription: "Guardan idioma, tema y consentimiento para que la web funcione bien.",
+    technicalStatus: "Siempre activas",
+    analyticsTitle: "Analitica opcional",
+    analyticsDescription: "Solo se activa si aceptas. Ayuda a medir visitas, clics y rendimiento.",
+    analyticsStatusOn: "Activada",
+    analyticsStatusOff: "Desactivada",
+    analyticsStatusUnset: "Sin decidir",
+    detailsLabel: "Detalles",
     details: [
       {
         id: "what",
@@ -62,10 +82,20 @@ export const COOKIE_COPY: Record<Lang, CookieCopy> = {
       "I use technical cookies so the site works, and only if you accept, Vercel analytics (Web Analytics and Speed Insights) to measure visits, clicks, and improve content.",
     accept: "Accept analytics",
     reject: "Reject analytics",
+    close: "Close preferences",
     manage: "Manage cookies",
     currentAccepted: "Current status: analytics enabled",
     currentRejected: "Current status: analytics disabled",
     mandatory: "Technical cookies are required and always enabled.",
+    technicalTitle: "Required technical cookies",
+    technicalDescription: "Store language, theme, and consent so the site works properly.",
+    technicalStatus: "Always on",
+    analyticsTitle: "Optional analytics",
+    analyticsDescription: "Only enabled if you accept. Helps measure visits, clicks, and performance.",
+    analyticsStatusOn: "Enabled",
+    analyticsStatusOff: "Disabled",
+    analyticsStatusUnset: "Not set",
+    detailsLabel: "Details",
     details: [
       {
         id: "what",
@@ -103,28 +133,44 @@ export const COOKIE_COPY: Record<Lang, CookieCopy> = {
 
 export const DICT = {
   es: {
-    role: "Desarrollador de software en Las Palmas de Gran Canaria",
-    desc: `${new Date(Date.now()).getFullYear() - 2020} años de experiencia. Trabajo con Python, Node.js, PostgreSQL y Redis en backend, y React, Next.js y Tailwind en frontend cuando el proyecto lo necesita.`,
+    role: "Full Stack Developer — foco en backend · Las Palmas de Gran Canaria",
+    desc: "Full stack con foco en backend. Diseño APIs, workers asíncronos y sistemas de observabilidad. En frontend con Next.js, Tailwind y el ecosistema React. He trabajado en plataformas SaaS con pipelines de análisis documental mediante LLMs.",
     ctaProjects: "Ver proyectos",
     ctaContact: "Contactar",
+    ctaCV: "Descargar CV",
     sProjects: "proyectos",
     sExperience: "experiencia",
     sStack: "stack",
+    sEducation: "formación",
+    sLanguages: "idiomas",
     sContact: "contacto",
     tagNew: "nuevo",
     tagWip: "wip",
+    caseStudyOpen: "ver case study",
+    caseStudyClose: "ocultar case study",
+    caseStudyProblem: "problema",
+    caseStudyArchitecture: "arquitectura",
+    caseStudyDecisions: "decisiones",
   },
   en: {
-    role: "Backend developer based in Las Palmas de Gran Canaria",
-    desc: `${new Date(Date.now()).getFullYear() - 2020} years of experience. I work with Python, Node.js, PostgreSQL and Redis on the backend, and React, Next.js and Tailwind on the frontend when needed.`,
+    role: "Full Stack Developer — backend-focused · Las Palmas de Gran Canaria",
+    desc: "Full stack focused on backend. I design APIs, async workers and observability systems. On the frontend with Next.js, Tailwind and the React ecosystem. I've worked on SaaS platforms with LLM-powered document analysis pipelines.",
     ctaProjects: "View projects",
     ctaContact: "Get in touch",
+    ctaCV: "Download CV",
     sProjects: "projects",
     sExperience: "experience",
     sStack: "stack",
+    sEducation: "education",
+    sLanguages: "languages",
     sContact: "contact",
     tagNew: "new",
     tagWip: "wip",
+    caseStudyOpen: "view case study",
+    caseStudyClose: "hide case study",
+    caseStudyProblem: "problem",
+    caseStudyArchitecture: "architecture",
+    caseStudyDecisions: "decisions",
   },
 } as const;
 

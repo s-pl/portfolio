@@ -4,7 +4,7 @@ interface Props {
 
 export default function SectionLabel({ label }: Props) {
   return (
-    <p className="font-mono text-xs text-emerald-400 mb-8">
+    <p className="font-mono text-sm text-emerald-400 mb-8">
       {"// "}
       {label}
     </p>
