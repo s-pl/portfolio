@@ -123,6 +123,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-geist-sans), system-ui, sans-serif;
+    overflow-x: clip;
   }
 }
 
@@ -130,8 +131,8 @@
   .theme-toggle {
     position: relative;
     display: grid;
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     place-items: center;
     overflow: hidden;
     border: 1px solid color-mix(in oklch, var(--border) 76%, transparent);
@@ -177,6 +178,15 @@
     z-index: 1;
     display: grid;
     place-items: center;
+  }
+}
+
+@media (min-width: 40rem) {
+  @layer components {
+    .theme-toggle {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 }
 

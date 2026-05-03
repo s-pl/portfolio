@@ -30,7 +30,7 @@ export default function Portfolio() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar t={t} lang={lang} dark={dark} setDark={setDark} setLang={setLang} />
 
-      <main className="mx-auto max-w-2xl px-6 pt-24 pb-20">
+      <main className="mx-auto max-w-2xl px-4 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-20">
         <Hero t={t} lang={lang} />
         <Divider />
         <ExperienceList

@@ -19,7 +19,7 @@ export default function ProjectList({ projects, label, tagNew, tagWip }: Props) 
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="projects" className="py-12">
+    <section id="projects" className="scroll-mt-16 py-10 sm:py-12">
       <SectionLabel label={label} />
       <div>
         {projects.map((project, i) => (
@@ -31,11 +31,11 @@ export default function ProjectList({ projects, label, tagNew, tagWip }: Props) 
             initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.07 }}
-            className="group flex items-start gap-4 py-5 border-b border-border last:border-b-0 hover:bg-muted/20 -mx-3 px-3 rounded-sm transition-colors cursor-pointer"
+            className="group -mx-3 flex cursor-pointer items-start gap-3 rounded-sm border-b border-border px-3 py-5 transition-colors last:border-b-0 hover:bg-muted/20 sm:gap-4"
           >
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="font-mono text-base font-semibold">{project.title}</span>
+              <div className="mb-1.5 flex flex-wrap items-center gap-2">
+                <span className="min-w-0 break-words font-mono text-base font-semibold">{project.title}</span>
                 {project.tag && (
                   <span className={`font-mono text-sm px-1.5 py-0.5 rounded border ${tagStyles[project.tag]}`}>
                     {project.tag === "new" ? tagNew : tagWip}
@@ -45,7 +45,7 @@ export default function ProjectList({ projects, label, tagNew, tagWip }: Props) 
               <p className="text-base text-muted-foreground leading-relaxed mb-3">{project.desc}</p>
               <div className="flex flex-wrap gap-1.5">
                 {project.tech.map((tech) => (
-                  <span key={tech} className="font-mono text-sm text-muted-foreground bg-muted px-2 py-0.5 rounded">
+                  <span key={tech} className="rounded bg-muted px-2 py-1 font-mono text-sm text-muted-foreground">
                     {tech}
                   </span>
                 ))}

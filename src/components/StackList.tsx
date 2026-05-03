@@ -71,15 +71,15 @@ const DEFAULT_BADGE = "text-muted-foreground/60 border-border bg-muted";
 
 export default function StackList({ label }: Props) {
   return (
-    <section id="stack" className="py-12">
+    <section id="stack" className="scroll-mt-16 py-10 sm:py-12">
       <SectionLabel label={label} />
       <div className="space-y-4">
         {Object.entries(STACK).map(([category, items]) => {
           const badgeClass = CATEGORY_ACCENT[category] ?? DEFAULT_BADGE;
 
           return (
-            <div key={category} className="flex gap-6 items-start">
-              <span className="font-mono text-sm text-muted-foreground/60 w-20 shrink-0 pt-1">
+            <div key={category} className="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-6">
+              <span className="w-full font-mono text-sm text-muted-foreground/60 sm:w-20 sm:shrink-0 sm:pt-1">
                 {category}
               </span>
               <div className="flex flex-wrap gap-2">
@@ -89,7 +89,7 @@ export default function StackList({ label }: Props) {
                   return (
                     <span
                       key={item}
-                      className={`font-mono text-sm border rounded px-2 py-1 inline-flex items-center gap-1.5 ${badgeClass}`}
+                      className={`inline-flex min-h-8 items-center gap-1.5 rounded border px-2 py-1 font-mono text-sm ${badgeClass}`}
                     >
                       <Icon size={14} className="shrink-0" />
                       {item}

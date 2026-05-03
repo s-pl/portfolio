@@ -82,7 +82,7 @@ export default function CookieBanner({ lang }: Props) {
         {showManagerButton ? (
           <motion.div
             key="cookie-manager"
-            className="fixed bottom-4 right-4 z-50"
+            className="fixed right-4 z-50 bottom-[calc(1rem+env(safe-area-inset-bottom))]"
             initial={panelAnimation.initial}
             animate={panelAnimation.animate}
             exit={panelAnimation.exit}
@@ -106,45 +106,48 @@ export default function CookieBanner({ lang }: Props) {
         {visible ? (
           <motion.div
             key="cookie-panel"
-            className="fixed right-4 bottom-4 left-4 z-50 sm:left-auto sm:w-[32rem]"
+            className="fixed inset-x-0 bottom-0 z-50 sm:right-4 sm:bottom-4 sm:left-auto sm:w-[32rem]"
             initial={panelAnimation.initial}
             animate={panelAnimation.animate}
             exit={panelAnimation.exit}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
             style={{ transformOrigin: "bottom right" }}
           >
-            <Card className="w-full overflow-hidden rounded-xl border-border/80 bg-card/95 py-0 shadow-2xl backdrop-blur">
-              <CardHeader className="relative gap-3 border-b border-border/70 bg-muted/25 px-5 py-5">
+            <Card className="max-h-[88dvh] w-full overflow-hidden rounded-b-none rounded-t-xl border-border/80 bg-card/95 py-0 shadow-2xl backdrop-blur sm:max-h-[min(88dvh,42rem)] sm:rounded-xl">
+              <div className="flex justify-center pt-2 sm:hidden" aria-hidden="true">
+                <div className="h-1 w-10 rounded-full bg-muted-foreground/25" />
+              </div>
+              <CardHeader className="relative shrink-0 gap-3 border-b border-border/70 bg-muted/25 px-4 py-4 sm:px-5 sm:py-5">
                 {consent ? (
                   <button
                     type="button"
                     aria-label={copy.close}
                     onClick={() => setVisible(false)}
-                    className="absolute top-4 right-4 rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="absolute top-3 right-3 rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:top-4 sm:right-4"
                   >
                     <X className="size-4" />
                   </button>
                 ) : null}
-                <div className="flex items-start gap-3 pr-8">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-full border border-border bg-background text-foreground shadow-sm">
-                    <Cookie className="size-5" />
+                <div className="flex items-start gap-3 pr-7 sm:pr-8">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-border bg-background text-foreground shadow-sm sm:size-10">
+                    <Cookie className="size-4 sm:size-5" />
                   </span>
                   <div className="flex min-w-0 flex-col gap-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <CardTitle className="text-xl leading-tight">{copy.title}</CardTitle>
+                      <CardTitle className="text-lg leading-tight sm:text-xl">{copy.title}</CardTitle>
                       <Badge variant={consent === "accepted" ? "default" : "secondary"}>
                         {analyticsStatus}
                       </Badge>
                     </div>
-                    <CardDescription className="text-base leading-relaxed">
+                    <CardDescription className="text-sm leading-relaxed sm:text-base">
                       {copy.summary}
                     </CardDescription>
                   </div>
                 </div>
               </CardHeader>
 
-              <CardContent className="flex flex-col gap-4 px-5 py-5">
-                <div className="grid gap-3 sm:grid-cols-2">
+              <CardContent className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5 sm:py-5">
+                <div className="grid gap-2 sm:grid-cols-2 sm:gap-3">
                   <div className="flex gap-3 rounded-lg border border-border/80 bg-background/70 p-3">
                     <ShieldCheck className="mt-0.5 size-5 shrink-0 text-muted-foreground" />
                     <div className="min-w-0">
@@ -195,7 +198,7 @@ export default function CookieBanner({ lang }: Props) {
                 </Accordion>
               </CardContent>
 
-              <CardFooter className="flex-col-reverse gap-2 border-t border-border/70 bg-muted/20 px-5 py-4 sm:flex-row sm:justify-end">
+              <CardFooter className="shrink-0 flex-col-reverse gap-2 border-t border-border/70 bg-muted/20 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:flex-row sm:justify-end sm:px-5 sm:py-4">
                 <Button
                   variant="outline"
                   className="w-full sm:w-auto"

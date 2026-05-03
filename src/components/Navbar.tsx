@@ -78,12 +78,12 @@ export default function Navbar({ t, lang, dark, setDark, setLang }: Props) {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
-      <div className="mx-auto max-w-2xl px-6 h-12 flex items-center justify-between">
-        <a href="#" className="font-mono text-base font-medium hover:opacity-70 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
+      <div className="mx-auto flex h-14 max-w-2xl items-center justify-between px-4 sm:h-12 sm:px-6">
+        <a href="#" className="rounded-sm font-mono text-base font-medium transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <span className="text-emerald-400">~</span>/samu
         </a>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 sm:gap-5">
           {sectionLinks.map(({ href, label }) => (
             <a
               key={href}
@@ -99,23 +99,23 @@ export default function Navbar({ t, lang, dark, setDark, setLang }: Props) {
               <DialogTrigger asChild>
                 <button
                   aria-label="Abrir menu de navegacion"
-                  className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+                  className="grid size-10 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <Menu size={18} />
                 </button>
               </DialogTrigger>
-              <DialogContent className="overflow-hidden p-0 sm:max-w-sm">
+              <DialogContent className="!left-0 !top-auto !bottom-0 !w-full !max-w-none !translate-x-0 !translate-y-0 overflow-hidden rounded-b-none rounded-t-xl p-0 sm:!left-1/2 sm:!top-1/2 sm:!bottom-auto sm:!max-w-sm sm:!-translate-x-1/2 sm:!-translate-y-1/2 sm:rounded-lg">
                 <DialogHeader className="border-b border-border bg-muted/30 px-5 py-4 text-left">
                   <DialogTitle className="font-mono text-base">
                     <span className="text-emerald-400">~</span>/samu
                   </DialogTitle>
                 </DialogHeader>
-                <div className="flex flex-col gap-1 p-3">
+                <div className="flex flex-col gap-1 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
                   {sectionLinks.map(({ href, label }) => (
                     <DialogClose key={href} asChild>
                       <a
                         href={href}
-                        className="group flex items-center justify-between rounded-md px-3 py-3 font-mono text-base text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="group flex min-h-12 items-center justify-between rounded-md px-3 py-3 font-mono text-base text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       >
                         <span>{label}</span>
                         <ArrowRight className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
@@ -127,7 +127,7 @@ export default function Navbar({ t, lang, dark, setDark, setLang }: Props) {
             </Dialog>
           </div>
 
-          <div className="flex items-center gap-3 pl-3 border-l border-border">
+          <div className="flex items-center gap-2 border-l border-border pl-3 sm:gap-3">
             <button
               onClick={handleThemeToggle}
               className="theme-toggle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -141,7 +141,7 @@ export default function Navbar({ t, lang, dark, setDark, setLang }: Props) {
             </button>
             <button
               onClick={() => setLang(lang === "es" ? "en" : "es")}
-              className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+              className="grid min-h-10 min-w-10 place-items-center rounded-md font-mono text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-0 sm:min-w-0 sm:rounded-sm"
               aria-label={lang === "es" ? "Change language to English" : "Cambiar idioma a espanol"}
             >
               {lang === "es" ? "EN" : "ES"}

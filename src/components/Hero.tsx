@@ -20,19 +20,19 @@ export default function Hero({ t, lang }: Props) {
   const cvHref = lang === "es" ? "/cv/cv-samuel-ponce.pdf" : "/cv/cv-samuel-ponce-en.pdf";
 
   return (
-    <section className="py-16">
+    <section className="scroll-mt-16 py-12 sm:py-16">
       <motion.div
         initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
       >
         <p className="font-mono text-sm text-emerald-400 mb-5">$ whoami</p>
-        <h1 className="text-4xl font-bold tracking-tight mb-3">Samuel Ponce Luna</h1>
-        <p className="text-lg text-muted-foreground mb-5">{t.role}</p>
+        <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Samuel Ponce Luna</h1>
+        <p className="mb-5 text-base leading-relaxed text-muted-foreground sm:text-lg">{t.role}</p>
         <p className="text-base text-muted-foreground leading-relaxed max-w-lg mb-8">{t.desc}</p>
 
-        <div className="flex flex-wrap items-center gap-3 mb-8">
-          <Button asChild>
+        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <Button asChild className="w-full sm:w-auto">
             <a
               href="#projects"
               onClick={() =>
@@ -42,7 +42,7 @@ export default function Hero({ t, lang }: Props) {
               {t.ctaProjects}
             </a>
           </Button>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="w-full sm:w-auto">
             <a
               href="#contact"
               onClick={() =>
@@ -52,7 +52,7 @@ export default function Hero({ t, lang }: Props) {
               {t.ctaContact}
             </a>
           </Button>
-          <Button asChild variant="ghost">
+          <Button asChild variant="ghost" className="w-full sm:w-auto">
             <a
               href={cvHref}
               download
@@ -63,13 +63,13 @@ export default function Hero({ t, lang }: Props) {
           </Button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-5">
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
           {links.map(({ href, icon: Icon, label, external }) => (
             <a
               key={href}
               href={href}
               {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-              className="flex items-center gap-2 text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="flex max-w-full items-center gap-2 text-base text-muted-foreground transition-colors hover:text-foreground"
               onClick={() =>
                 trackEvent("contact_click", {
                   destination: label,
@@ -79,7 +79,7 @@ export default function Hero({ t, lang }: Props) {
               }
             >
               <Icon size={15} />
-              {label}
+              <span className="min-w-0 break-all">{label}</span>
             </a>
           ))}
         </div>
