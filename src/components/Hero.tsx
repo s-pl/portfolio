@@ -31,8 +31,8 @@ export default function Hero({ t, lang }: Props) {
         <p className="mb-5 text-base leading-relaxed text-muted-foreground sm:text-lg">{t.role}</p>
         <p className="text-base text-muted-foreground leading-relaxed max-w-lg mb-8">{t.desc}</p>
 
-        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-          <Button asChild className="w-full sm:w-auto">
+        <div className="mb-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
+          <Button asChild className="col-span-2 w-full sm:w-auto">
             <a
               href="#projects"
               onClick={() =>
@@ -52,7 +52,7 @@ export default function Hero({ t, lang }: Props) {
               {t.ctaContact}
             </a>
           </Button>
-          <Button asChild variant="ghost" className="w-full sm:w-auto">
+          <Button asChild variant="outline" className="w-full sm:w-auto">
             <a
               href={cvHref}
               download

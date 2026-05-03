@@ -113,11 +113,11 @@ export default function CookieBanner({ lang }: Props) {
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
             style={{ transformOrigin: "bottom right" }}
           >
-            <Card className="max-h-[88dvh] w-full overflow-hidden rounded-b-none rounded-t-xl border-border/80 bg-card/95 py-0 shadow-2xl backdrop-blur sm:max-h-[min(88dvh,42rem)] sm:rounded-xl">
+            <Card className="max-h-[88dvh] w-full gap-0 overflow-hidden rounded-b-none rounded-t-xl border-border/80 bg-card/95 py-0 shadow-2xl backdrop-blur sm:max-h-[min(88dvh,42rem)] sm:rounded-xl">
               <div className="flex justify-center pt-2 sm:hidden" aria-hidden="true">
                 <div className="h-1 w-10 rounded-full bg-muted-foreground/25" />
               </div>
-              <CardHeader className="relative shrink-0 gap-3 border-b border-border/70 bg-muted/25 px-4 py-4 sm:px-5 sm:py-5">
+              <CardHeader className="relative shrink-0 gap-3 border-b border-border/70 bg-muted/25 px-4 pb-4 pt-3 sm:px-5 sm:py-5">
                 {consent ? (
                   <button
                     type="button"
@@ -146,8 +146,8 @@ export default function CookieBanner({ lang }: Props) {
                 </div>
               </CardHeader>
 
-              <CardContent className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5 sm:py-5">
-                <div className="grid gap-2 sm:grid-cols-2 sm:gap-3">
+              <CardContent className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-contain px-4 py-3 sm:gap-4 sm:px-5 sm:py-5">
+                <div className="hidden gap-2 sm:grid sm:grid-cols-2 sm:gap-3">
                   <div className="flex gap-3 rounded-lg border border-border/80 bg-background/70 p-3">
                     <ShieldCheck className="mt-0.5 size-5 shrink-0 text-muted-foreground" />
                     <div className="min-w-0">
@@ -177,7 +177,9 @@ export default function CookieBanner({ lang }: Props) {
                   </div>
                 </div>
 
-                <p className="font-mono text-sm text-muted-foreground">{copy.mandatory}</p>
+                <p className="rounded-md border border-border/70 bg-background/60 px-3 py-2 font-mono text-sm leading-relaxed text-muted-foreground sm:border-0 sm:bg-transparent sm:px-0 sm:py-0">
+                  {copy.mandatory}
+                </p>
 
                 <Accordion
                   type="single"
@@ -187,10 +189,10 @@ export default function CookieBanner({ lang }: Props) {
                 >
                   {copy.details.map((item) => (
                     <AccordionItem key={item.id} value={item.id}>
-                      <AccordionTrigger className="text-base hover:no-underline">
+                      <AccordionTrigger className="text-sm hover:no-underline sm:text-base">
                         {item.label}
                       </AccordionTrigger>
-                      <AccordionContent className="text-base leading-relaxed text-muted-foreground">
+                      <AccordionContent className="text-sm leading-relaxed text-muted-foreground sm:text-base">
                         {item.content}
                       </AccordionContent>
                     </AccordionItem>
@@ -198,7 +200,7 @@ export default function CookieBanner({ lang }: Props) {
                 </Accordion>
               </CardContent>
 
-              <CardFooter className="shrink-0 flex-col-reverse gap-2 border-t border-border/70 bg-muted/20 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:flex-row sm:justify-end sm:px-5 sm:py-4">
+              <CardFooter className="shrink-0 flex-col-reverse gap-2 border-t border-border/70 bg-card/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_28px_rgb(0_0_0_/_0.08)] backdrop-blur sm:flex-row sm:justify-end sm:bg-muted/20 sm:px-5 sm:py-4 sm:shadow-none">
                 <Button
                   variant="outline"
                   className="w-full sm:w-auto"
