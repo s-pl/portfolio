@@ -15,40 +15,6 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://samuelponce.es"),
-  title: {
-    default: "Samuel Ponce Luna | Desarrollador de software en Las Palmas de Gran Canaria",
-    template: "%s | Samuel Ponce Luna",
-  },
-  description:
-    "Desarrollador de software backend y Node.js en Las Palmas de Gran Canaria. Portfolio de Samuel Ponce Luna con proyectos, experiencia y stack.",
-  keywords: [
-    "programador las palmas de gran canaria",
-    "samuel ponce",
-    "nodejs las palmas",
-    "desarrollador backend las palmas",
-    "programador web las palmas",
-    "samuel ponce luna",
-    "portfolio programador",
-    "next.js las palmas",
-  ],
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    locale: "es_ES",
-    url: "https://samuelponce.es",
-    siteName: "Samuel Ponce Luna",
-    title: "Samuel Ponce Luna | Desarrollador de software en Las Palmas de Gran Canaria",
-    description:
-      "Desarrollador de software backend y Node.js en Las Palmas de Gran Canaria. Proyectos, experiencia y stack tecnológico.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Samuel Ponce Luna | Desarrollador de software en Las Palmas de Gran Canaria",
-    description:
-      "Desarrollador de software backend y Node.js en Las Palmas de Gran Canaria. Portfolio profesional.",
-  },
   robots: {
     index: true,
     follow: true,
@@ -60,46 +26,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://samuelponce.es/#person",
-      name: "Samuel Ponce Luna",
-      url: "https://samuelponce.es",
-      jobTitle: "Desarrollador de software",
-      description:
-        "Desarrollador de software backend y Node.js en Las Palmas de Gran Canaria.",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Las Palmas de Gran Canaria",
-        addressRegion: "Canarias",
-        addressCountry: "ES",
-      },
-      sameAs: [
-        "https://github.com/s-pl",
-        "https://www.linkedin.com/in/samuel-ponce-luna-aba75b2b8/",
-      ],
-      knowsAbout: [
-        "Node.js",
-        "TypeScript",
-        "Python",
-        "PostgreSQL",
-        "Redis",
-        "Next.js",
-      ],
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://samuelponce.es/#website",
-      url: "https://samuelponce.es",
-      name: "Samuel Ponce Luna",
-      inLanguage: ["es", "en"],
-    },
-  ],
 };
 
 const themeInitScript = `(() => {
@@ -125,10 +51,12 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-background focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:ring-2 focus:ring-ring"
+        >
+          Saltar al contenido
+        </a>
         {children}
         <VercelAnalytics />
       </body>

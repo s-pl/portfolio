@@ -256,3 +256,32 @@
     filter: saturate(0.78) brightness(0.92);
   }
 }
+
+@media print {
+  nav,
+  [data-cookie-banner],
+  .fixed {
+    display: none !important;
+  }
+
+  body {
+    color: #000;
+    background: #fff;
+  }
+
+  main {
+    padding-top: 0 !important;
+    max-width: 100% !important;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    color: #666;
+  }
+
+  a[href^="#"]::after,
+  a[href^="mailto"]::after {
+    content: "";
+  }
+}

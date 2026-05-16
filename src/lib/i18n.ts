@@ -1,5 +1,13 @@
 export type Lang = "es" | "en";
 
+export function isLang(s: unknown): s is Lang {
+  return s === "es" || s === "en";
+}
+
+export function getDict(lang: Lang) {
+  return DICT[lang];
+}
+
 export type CookieCopy = {
   title: string;
   summary: string;
@@ -134,7 +142,7 @@ export const COOKIE_COPY: Record<Lang, CookieCopy> = {
 export const DICT = {
   es: {
     role: "Full Stack Developer — foco en backend · Las Palmas de Gran Canaria",
-    desc: "Full stack con foco en backend. Diseño APIs, workers asíncronos y sistemas de observabilidad. En frontend con Next.js, Tailwind y el ecosistema React. He trabajado en plataformas SaaS con pipelines de análisis documental mediante LLMs.",
+    desc: "Full stack con foco en backend. Prácticas Erasmus en C-Link (Londres), startup de IA para el sector de la construcción. Diseño APIs, workers asíncronos y sistemas de observabilidad. En frontend con Next.js, Tailwind y el ecosistema React.",
     ctaProjects: "Ver proyectos",
     ctaContact: "Contactar",
     ctaCV: "Descargar CV",
@@ -151,10 +159,17 @@ export const DICT = {
     caseStudyProblem: "problema",
     caseStudyArchitecture: "arquitectura",
     caseStudyDecisions: "decisiones",
+    tagErasmus: "erasmus",
+    viewProject: "Ver proyecto",
+    backToProjects: "← Volver a proyectos",
+    projectProblem: "problema",
+    projectArchitecture: "arquitectura",
+    projectDecisions: "decisiones",
+    projectLinks: "enlaces",
   },
   en: {
     role: "Full Stack Developer — backend-focused · Las Palmas de Gran Canaria",
-    desc: "Full stack focused on backend. I design APIs, async workers and observability systems. On the frontend with Next.js, Tailwind and the React ecosystem. I've worked on SaaS platforms with LLM-powered document analysis pipelines.",
+    desc: "Full stack focused on backend. Erasmus placement at C-Link (London), an AI startup in the construction industry. I design APIs, async workers and observability systems. On the frontend with Next.js, Tailwind and the React ecosystem.",
     ctaProjects: "View projects",
     ctaContact: "Get in touch",
     ctaCV: "Download CV",
@@ -171,6 +186,13 @@ export const DICT = {
     caseStudyProblem: "problem",
     caseStudyArchitecture: "architecture",
     caseStudyDecisions: "decisions",
+    tagErasmus: "erasmus",
+    viewProject: "View project",
+    backToProjects: "← Back to projects",
+    projectProblem: "problem",
+    projectArchitecture: "architecture",
+    projectDecisions: "decisions",
+    projectLinks: "links",
   },
 } as const;
 

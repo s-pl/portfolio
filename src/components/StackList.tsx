@@ -1,5 +1,6 @@
 import SectionLabel from "./SectionLabel";
-import { STACK } from "@/lib/data";
+import { STACK, STACK_LABELS } from "@/lib/data";
+import type { Lang } from "@/lib/i18n";
 import {
   Activity,
   Braces,
@@ -27,6 +28,7 @@ import {
 
 interface Props {
   label: string;
+  lang: Lang;
 }
 
 const TECH_ICONS: Record<string, LucideIcon> = {
@@ -69,7 +71,8 @@ const CATEGORY_ACCENT: Record<string, string> = {
 
 const DEFAULT_BADGE = "text-muted-foreground/60 border-border bg-muted";
 
-export default function StackList({ label }: Props) {
+export default function StackList({ label, lang }: Props) {
+  const labels = STACK_LABELS[lang];
   return (
     <section id="stack" className="scroll-mt-16 py-10 sm:py-12">
       <SectionLabel label={label} />
@@ -80,7 +83,7 @@ export default function StackList({ label }: Props) {
           return (
             <div key={category} className="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-6">
               <span className="w-full font-mono text-sm text-muted-foreground/60 sm:w-20 sm:shrink-0 sm:pt-1">
-                {category}
+                {labels[category] ?? category}
               </span>
               <div className="flex flex-wrap gap-2">
                 {items.map((item) => {

@@ -1,6 +1,9 @@
+"use client";
+
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import SectionLabel from "./SectionLabel";
+import { useLangContext } from "@/components/LangProvider";
 import type { Project } from "@/lib/data";
 
 interface Props {
@@ -17,17 +20,23 @@ const tagStyles = {
 
 export default function ProjectList({ projects, label, tagNew, tagWip }: Props) {
   const shouldReduceMotion = useReducedMotion();
+  const { lang } = useLangContext();
 
   return (
     <section id="projects" className="scroll-mt-16 py-10 sm:py-12">
       <SectionLabel label={label} />
       <div>
-        {projects.map((project, i) => (
+        {projects.map((project, i) => {
+          const href = project.content
+            ? `/${lang}/proyectos/${project.slug}`
+            : project.href;
+          const isExternal = !project.content;
+
+          return (
           <motion.a
             key={project.title}
-            href={project.href}
-            target="_blank"
-            rel="noreferrer"
+            href={href}
+            {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
             initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.07 }}
@@ -56,7 +65,8 @@ export default function ProjectList({ projects, label, tagNew, tagWip }: Props) 
               className="text-muted-foreground group-hover:text-foreground transition-colors shrink-0 mt-0.5"
             />
           </motion.a>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, useReducedMotion } from "framer-motion";
 import { Mail, Github, Linkedin } from "lucide-react";
 import type { Dict, Lang } from "@/lib/i18n";

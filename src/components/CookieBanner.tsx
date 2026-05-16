@@ -138,6 +138,12 @@ export default function CookieBanner({ lang }: Props) {
                       <Badge variant={consent === "accepted" ? "default" : "secondary"}>
                         {analyticsStatus}
                       </Badge>
+                      <a
+                        href={`/${lang}/privacy`}
+                        className="font-mono text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
+                      >
+                        {lang === "es" ? "más info" : "learn more"}
+                      </a>
                     </div>
                     <CardDescription className="text-sm leading-relaxed sm:text-base">
                       {copy.summary}

@@ -1,10 +1,5 @@
-"use client";
-
-import { useEffect } from "react";
-import { useLang } from "@/hooks/useLang";
-import { useTheme } from "@/hooks/useTheme";
-import { animateFavicon } from "@/lib/favicon";
-import { DICT } from "@/lib/i18n";
+import { notFound } from "next/navigation";
+import { isLang, getDict } from "@/lib/i18n";
 import { PROJECTS, EXPERIENCE, EDUCATION, LANGUAGES } from "@/lib/data";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -18,19 +13,24 @@ import CookieBanner from "@/components/CookieBanner";
 
 const Divider = () => <div className="border-t border-border" />;
 
-export default function Portfolio() {
-  const { lang, setLang } = useLang();
-  const { dark, setDark } = useTheme();
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  if (!isLang(lang)) notFound();
 
-  useEffect(() => animateFavicon(), []);
-
-  const t = DICT[lang];
+  const t = getDict(lang);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar t={t} lang={lang} dark={dark} setDark={setDark} setLang={setLang} />
+      <Navbar t={t} lang={lang} />
 
-      <main className="mx-auto max-w-2xl px-4 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-20">
+      <main
+        id="main"
+        className="mx-auto max-w-2xl px-4 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-20"
+      >
         <Hero t={t} lang={lang} />
         <Divider />
         <ExperienceList
@@ -43,11 +43,17 @@ export default function Portfolio() {
             architecture: t.caseStudyArchitecture,
             decisions: t.caseStudyDecisions,
           }}
+          tagLabels={{ erasmus: t.tagErasmus }}
         />
         <Divider />
-        <ProjectList projects={PROJECTS[lang]} label={t.sProjects} tagNew={t.tagNew} tagWip={t.tagWip} />
+        <ProjectList
+          projects={PROJECTS[lang]}
+          label={t.sProjects}
+          tagNew={t.tagNew}
+          tagWip={t.tagWip}
+        />
         <Divider />
-        <StackList label={t.sStack} />
+        <StackList label={t.sStack} lang={lang} />
         <Divider />
         <EducationList education={EDUCATION[lang]} label={t.sEducation} />
         <Divider />
@@ -56,7 +62,7 @@ export default function Portfolio() {
         <ContactList label={t.sContact} />
 
         <footer className="pt-6 border-t border-border">
-          <p className="font-mono text-sm text-muted-foreground/50">
+          <p className="font-mono text-sm text-muted-foreground">
             samuel ponce luna © {new Date().getFullYear()}
           </p>
         </footer>
