@@ -166,6 +166,7 @@ export const DICT = {
     projectArchitecture: "arquitectura",
     projectDecisions: "decisiones",
     projectLinks: "enlaces",
+    projectDiagrams: "diagramas",
   },
   en: {
     role: "Full Stack Developer — backend-focused · Las Palmas de Gran Canaria",
@@ -193,6 +194,7 @@ export const DICT = {
     projectArchitecture: "architecture",
     projectDecisions: "decisions",
     projectLinks: "links",
+    projectDiagrams: "diagrams",
   },
 } as const;
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { isLang, getDict } from "@/lib/i18n";
 import { PROJECTS } from "@/lib/data";
+import { MermaidDiagram } from "@/components/MermaidDiagram";
 
 const BASE = "https://samuelponce.es";
 
@@ -109,6 +110,20 @@ export default async function ProjectPage({
             ))}
           </ul>
         </div>
+
+        {content.diagrams && content.diagrams.length > 0 && (
+          <div>
+            <p className="font-mono text-xs text-emerald-400/80 mb-4">{t.projectDiagrams}</p>
+            <div className="space-y-6">
+              {content.diagrams.map(({ title, definition }) => (
+                <div key={title}>
+                  <p className="font-mono text-xs text-muted-foreground/60 mb-2">// {title}</p>
+                  <MermaidDiagram definition={definition} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {content.links && content.links.length > 0 && (
           <div>

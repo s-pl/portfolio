@@ -12,6 +12,7 @@ export interface Project {
     architecture: string;
     decisions: string[];
     links?: Array<{ label: string; href: string }>;
+    diagrams?: Array<{ title: string; definition: string }>;
   };
 }
 
@@ -65,6 +66,73 @@ export const PROJECTS: Record<Lang, Project[]> = {
         ],
         links: [
           { label: "npm", href: "https://www.npmjs.com/package/lightq-node" },
+        ],
+        diagrams: [
+          {
+            title: "ciclo de vida de un job",
+            definition: `flowchart TD
+    A["queue.add(datos, opciones)"] --> B{"delay mayor que 0?"}
+    B -- no --> C["heap ready\nprioridad desc luego FIFO"]
+    B -- si --> D["heap delayed\ndueAt asc luego FIFO"]
+    D -->|timer disparado| C
+    C --> E["bucle drain\nrunning menor que concurrency\nrate limit ok"]
+    E --> F["runJob\nactive++"]
+    F --> G["handler + AbortSignal\ncarrera con timeout"]
+    G --> H["emit completed\nactive--"]
+    G --> I{"reintento\npermitido?"}
+    I -- si --> J["calcular delay\nfijo / exponencial + jitter\nanadir a heap delayed"]
+    J --> D
+    I -- no --> K["emit failed\nactive--"]
+    H --> L["drain"]
+    K --> L`,
+          },
+          {
+            title: "estructura interna",
+            definition: `classDiagram
+    class Queue {
+        +add(datos, opciones) Job
+        +process(handler) this
+        +cancel(id) boolean
+        +remove(id) boolean
+        +metrics() MetricsSnapshot
+        +onIdle() Promise
+        -running int
+        -concurrency int
+        -paused boolean
+    }
+    class MinHeap {
+        +push(item) void
+        +pop() T
+        +peek() T
+        -items T[]
+        -bubbleUp(i) void
+        -bubbleDown(i) void
+    }
+    class Job {
+        +id string
+        +data T
+        +priority int
+        +attempts int
+        +signal AbortSignal
+        +enqueuedAt number
+    }
+    Queue --> MinHeap : heap ready
+    Queue --> MinHeap : heap delayed
+    Queue --> Job : registro Map`,
+          },
+          {
+            title: "backoff y reintentos",
+            definition: `flowchart LR
+    A["handler lanza error"] --> B{"intentos menor o igual maxRetries\nshouldRetry?"}
+    B -- no --> C["emit failed\nfallo permanente"]
+    B -- si --> D{"modo\nbackoff"}
+    D -- fijo --> E["delay = base"]
+    D -- exponencial --> F["delay = base x 2^n"]
+    E --> G["aplicar jitter\ndelay x factor"]
+    F --> G
+    G --> H["anadir a heap delayed\nemit retry"]
+    H --> I["setTimeout delay\ndrain y reintentar"]`,
+          },
         ],
       },
     },
@@ -120,6 +188,73 @@ export const PROJECTS: Record<Lang, Project[]> = {
         ],
         links: [
           { label: "npm", href: "https://www.npmjs.com/package/lightq-node" },
+        ],
+        diagrams: [
+          {
+            title: "job lifecycle",
+            definition: `flowchart TD
+    A["queue.add(data, options)"] --> B{"delay > 0?"}
+    B -- no --> C["ready heap\npriority desc then FIFO"]
+    B -- yes --> D["delayed heap\ndueAt asc then FIFO"]
+    D -->|timer fires| C
+    C --> E["drain loop\nrunning < concurrency\nrate limit ok"]
+    E --> F["runJob\nactive++"]
+    F --> G["handler + AbortSignal\ntimeout race"]
+    G --> H["emit completed\nactive--"]
+    G --> I{"retry\nallowed?"}
+    I -- yes --> J["compute delay\nfixed / exponential + jitter\npush to delayed heap"]
+    J --> D
+    I -- no --> K["emit failed\nactive--"]
+    H --> L["drain"]
+    K --> L`,
+          },
+          {
+            title: "internal structure",
+            definition: `classDiagram
+    class Queue {
+        +add(data, options) Job
+        +process(handler) this
+        +cancel(id) boolean
+        +remove(id) boolean
+        +metrics() MetricsSnapshot
+        +onIdle() Promise
+        -running int
+        -concurrency int
+        -paused boolean
+    }
+    class MinHeap {
+        +push(item) void
+        +pop() T
+        +peek() T
+        -items T[]
+        -bubbleUp(i) void
+        -bubbleDown(i) void
+    }
+    class Job {
+        +id string
+        +data T
+        +priority int
+        +attempts int
+        +signal AbortSignal
+        +enqueuedAt number
+    }
+    Queue --> MinHeap : ready heap
+    Queue --> MinHeap : delayed heap
+    Queue --> Job : registry Map`,
+          },
+          {
+            title: "backoff & retries",
+            definition: `flowchart LR
+    A["handler throws"] --> B{"attempts le maxRetries\nshouldRetry?"}
+    B -- no --> C["emit failed\npermanent failure"]
+    B -- yes --> D{"backoff\nmode"}
+    D -- fixed --> E["delay = base"]
+    D -- exponential --> F["delay = base x 2^n"]
+    E --> G["apply jitter\ndelay x factor"]
+    F --> G
+    G --> H["push to delayed heap\nemit retry"]
+    H --> I["setTimeout delay\ndrain then re-execute"]`,
+          },
         ],
       },
     },
