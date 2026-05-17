@@ -6,6 +6,7 @@ export interface Project {
   desc: string;
   tech: string[];
   href: string;
+  kind?: "project" | "package";
   tag?: "new" | "wip";
   content?: {
     problem: string;
@@ -48,6 +49,7 @@ export const PROJECTS: Record<Lang, Project[]> = {
   es: [
     {
       slug: "lightq-node",
+      kind: "package",
       title: "lightq-node",
       desc: "Cola de trabajos en memoria para Node.js: cero dependencias en producción, TypeScript completo, concurrencia, prioridades, reintentos con backoff exponencial y cancelación por ID.",
       tech: ["Node.js", "TypeScript"],
@@ -66,6 +68,7 @@ export const PROJECTS: Record<Lang, Project[]> = {
         ],
         links: [
           { label: "npm", href: "https://www.npmjs.com/package/lightq-node" },
+          { label: "GitHub", href: "https://github.com/s-pl/queue-ts" },
         ],
         diagrams: [
           {
@@ -137,6 +140,97 @@ export const PROJECTS: Record<Lang, Project[]> = {
       },
     },
     {
+      slug: "cron-scheduler-ts",
+      kind: "package",
+      title: "cron-scheduler-ts",
+      desc: "Scheduler cron/intervalo en memoria para Node.js: cero dependencias, TypeScript completo, persistencia pluggable, deteccion de jobs perdidos y cero drift gracias a recalculo monotono del proximo tick.",
+      tech: ["Node.js", "TypeScript"],
+      href: "https://www.npmjs.com/package/cron-scheduler-ts",
+      tag: "new",
+      content: {
+        problem:
+          "Necesitaba un scheduler tipo cron para tareas recurrentes en proyectos Node.js sin depender de node-cron o agenda. Las opciones existentes o arrastran dependencias de runtime, o acumulan drift al reprogramar desde el fire anterior, o no detectan jobs que se perdieron mientras el proceso estuvo caido.",
+        architecture:
+          "Modulo ESM/CJS con zero runtime deps. Cada job tiene su propio setTimeout que recalcula el siguiente tick desde new Date() en cada disparo, eliminando drift. Parser cron escrito a mano (5/6 campos, rangos, pasos, aliases, tokens de mes y dia). StorageAdapter pluggable con implementaciones en memoria y filesystem (escritura atomica via .tmp + rename). Persistencia coalescente para no saturar disco en jobs frecuentes.",
+        decisions: [
+          "Per-job setTimeout en vez de tick global: cada reprogramacion recomputa desde el reloj actual, lo que hace imposible el drift acumulado.",
+          "Parser cron zero-dep escrito a mano: soporta los formatos de uso real (5/6 campos, */n, rangos, listas, aliases @daily, tokens jan-dec / sun-sat) sin engordar el bundle.",
+          "StorageAdapter como interfaz minima: cualquier backend (file, SQLite, Postgres, Redis) cumple el contrato sin acoplar el core a un driver.",
+          "Deteccion de jobs perdidos al arrancar: si lastRun + intervalo es menor que ahora, se emite missed sin replay y el job se reprograma al siguiente tick futuro.",
+          "Escritura atomica en FileSystemAdapter: write a .tmp + rename, para evitar corrupcion si el proceso muere a mitad de save.",
+        ],
+        links: [
+          { label: "npm", href: "https://www.npmjs.com/package/cron-scheduler-ts" },
+          { label: "GitHub", href: "https://github.com/s-pl/scheduler-ts" },
+        ],
+        diagrams: [
+          {
+            title: "ciclo de un job",
+            definition: `flowchart TD
+    A["scheduler.add(expr, handler)"] --> B["parseCron(expr)\nvalidar expresion"]
+    B --> C["computar nextTick\ndesde new Date()"]
+    C --> D["setTimeout(delay)\nunref si procede"]
+    D -->|timer dispara| E{"job\npausado?"}
+    E -- si --> F["clear timer\nsin reschedule"]
+    E -- no --> G["handler()\ncarrera con resultado"]
+    G --> H["runs++\nlastRun = now\nemit run"]
+    G --> I["emit error\nsi handler lanza"]
+    H --> J{"alcanzo\nmaxRuns?"}
+    I --> J
+    J -- si --> K["remover job"]
+    J -- no --> C`,
+          },
+          {
+            title: "estructura interna",
+            definition: `classDiagram
+    class Scheduler {
+        +add(expr, handler, options) string
+        +addInterval(ms, handler, options) string
+        +remove(id) boolean
+        +pause(id) boolean
+        +resume(id) boolean
+        +list() ScheduledJob[]
+        +nextRunAt(expr, from) Date
+        +start() void
+        +stop() Promise
+    }
+    class StorageAdapter {
+        +load() PersistedJob[]
+        +save(jobs) Promise
+        +onJobRun(id, lastRun, runs)
+    }
+    class FileSystemAdapter {
+        +load() PersistedJob[]
+        +save(jobs) Promise
+        -atomicWrite(path) void
+    }
+    class InternalJob {
+        +id string
+        +expr string
+        +runs int
+        +lastRun Date
+        +paused boolean
+        +timer Timeout
+    }
+    Scheduler --> InternalJob : registro Map
+    Scheduler --> StorageAdapter : persistencia
+    FileSystemAdapter ..|> StorageAdapter`,
+          },
+          {
+            title: "deteccion de jobs perdidos",
+            definition: `flowchart LR
+    A["scheduler.start()"] --> B["storage.load()"]
+    B --> C{"por cada\njob persistido"}
+    C --> D{"lastRun + intervalo\nmenor que ahora?"}
+    D -- no --> E["scheduleJob\nsiguiente tick futuro"]
+    D -- si --> F["emit missed\nsin replay"]
+    F --> E
+    E --> G["setTimeout\nhasta nextTick"]`,
+          },
+        ],
+      },
+    },
+    {
       slug: "envshare",
       title: "envshare",
       desc: "Herramienta web para distribuir variables de entorno entre equipos de forma segura: cifrado en tránsito, TTL por secreto y acceso de un solo uso.",
@@ -170,6 +264,7 @@ export const PROJECTS: Record<Lang, Project[]> = {
   en: [
     {
       slug: "lightq-node",
+      kind: "package",
       title: "lightq-node",
       desc: "Tiny in-memory job queue for Node.js: zero runtime dependencies, full TypeScript support, concurrency control, priority scheduling, retries with exponential backoff, and cancellation by ID.",
       tech: ["Node.js", "TypeScript"],
@@ -188,6 +283,7 @@ export const PROJECTS: Record<Lang, Project[]> = {
         ],
         links: [
           { label: "npm", href: "https://www.npmjs.com/package/lightq-node" },
+          { label: "GitHub", href: "https://github.com/s-pl/queue-ts" },
         ],
         diagrams: [
           {
@@ -254,6 +350,97 @@ export const PROJECTS: Record<Lang, Project[]> = {
     F --> G
     G --> H["push to delayed heap\nemit retry"]
     H --> I["setTimeout delay\ndrain then re-execute"]`,
+          },
+        ],
+      },
+    },
+    {
+      slug: "cron-scheduler-ts",
+      kind: "package",
+      title: "cron-scheduler-ts",
+      desc: "In-memory cron/interval scheduler for Node.js: zero runtime dependencies, full TypeScript support, pluggable persistence, missed-job detection, and zero drift via monotonic next-tick recomputation.",
+      tech: ["Node.js", "TypeScript"],
+      href: "https://www.npmjs.com/package/cron-scheduler-ts",
+      tag: "new",
+      content: {
+        problem:
+          "Needed a cron-style scheduler for recurring tasks in Node.js projects without pulling in node-cron or agenda. Existing options either drag runtime dependencies, accumulate drift by rescheduling from the previous fire time, or miss jobs that should have run while the process was down.",
+        architecture:
+          "ESM/CJS module with zero runtime deps. Each job owns its setTimeout and recomputes the next tick from new Date() on every fire, killing drift. Hand-rolled cron parser (5/6 fields, ranges, steps, aliases, month and weekday tokens). Pluggable StorageAdapter with in-memory and filesystem implementations (atomic write via .tmp + rename). Coalesced persistence to avoid disk thrash on high-frequency jobs.",
+        decisions: [
+          "Per-job setTimeout instead of a global tick: every reschedule recomputes from wall-clock now, making accumulated drift impossible.",
+          "Zero-dep cron parser hand-written: supports real-world formats (5/6 fields, */n, ranges, lists, @daily aliases, jan-dec / sun-sat tokens) without bloating the bundle.",
+          "StorageAdapter as a minimal interface: any backend (file, SQLite, Postgres, Redis) fulfills the contract without coupling the core to a driver.",
+          "Missed-job detection on startup: if lastRun + interval is less than now, missed is emitted with no replay and the job is rescheduled for the next future tick.",
+          "Atomic write in FileSystemAdapter: write to .tmp then rename, to avoid corruption if the process dies mid-save.",
+        ],
+        links: [
+          { label: "npm", href: "https://www.npmjs.com/package/cron-scheduler-ts" },
+          { label: "GitHub", href: "https://github.com/s-pl/scheduler-ts" },
+        ],
+        diagrams: [
+          {
+            title: "job lifecycle",
+            definition: `flowchart TD
+    A["scheduler.add(expr, handler)"] --> B["parseCron(expr)\nvalidate expression"]
+    B --> C["compute nextTick\nfrom new Date()"]
+    C --> D["setTimeout(delay)\nunref if applicable"]
+    D -->|timer fires| E{"job\npaused?"}
+    E -- yes --> F["clear timer\nno reschedule"]
+    E -- no --> G["handler()\nrace with result"]
+    G --> H["runs++\nlastRun = now\nemit run"]
+    G --> I["emit error\nif handler throws"]
+    H --> J{"reached\nmaxRuns?"}
+    I --> J
+    J -- yes --> K["remove job"]
+    J -- no --> C`,
+          },
+          {
+            title: "internal structure",
+            definition: `classDiagram
+    class Scheduler {
+        +add(expr, handler, options) string
+        +addInterval(ms, handler, options) string
+        +remove(id) boolean
+        +pause(id) boolean
+        +resume(id) boolean
+        +list() ScheduledJob[]
+        +nextRunAt(expr, from) Date
+        +start() void
+        +stop() Promise
+    }
+    class StorageAdapter {
+        +load() PersistedJob[]
+        +save(jobs) Promise
+        +onJobRun(id, lastRun, runs)
+    }
+    class FileSystemAdapter {
+        +load() PersistedJob[]
+        +save(jobs) Promise
+        -atomicWrite(path) void
+    }
+    class InternalJob {
+        +id string
+        +expr string
+        +runs int
+        +lastRun Date
+        +paused boolean
+        +timer Timeout
+    }
+    Scheduler --> InternalJob : registry Map
+    Scheduler --> StorageAdapter : persistence
+    FileSystemAdapter ..|> StorageAdapter`,
+          },
+          {
+            title: "missed-job detection",
+            definition: `flowchart LR
+    A["scheduler.start()"] --> B["storage.load()"]
+    B --> C{"for each\npersisted job"}
+    C --> D{"lastRun + interval\nless than now?"}
+    D -- no --> E["scheduleJob\nnext future tick"]
+    D -- yes --> F["emit missed\nno replay"]
+    F --> E
+    E --> G["setTimeout\nuntil nextTick"]`,
           },
         ],
       },

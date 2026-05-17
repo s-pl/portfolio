@@ -11,8 +11,8 @@ export function useTheme() {
       if (savedTheme === "dark" || savedTheme === "light") {
         setDark(savedTheme === "dark");
       } else {
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        setDark(prefersDark);
+        const hour = new Date().getHours();
+        setDark(hour < 7 || hour >= 20);
       }
     } finally {
       setIsReady(true);

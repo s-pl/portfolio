@@ -5,6 +5,7 @@ import { Mail, Github, Linkedin } from "lucide-react";
 import type { Dict, Lang } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
+import { useLangContext } from "@/components/LangProvider";
 
 interface Props {
   t: Pick<Dict, "role" | "desc" | "ctaProjects" | "ctaContact" | "ctaCV">;
@@ -19,14 +20,16 @@ const links = [
 
 export default function Hero({ t, lang }: Props) {
   const shouldReduceMotion = useReducedMotion();
+  const { hasAnimated } = useLangContext();
+  const skipAnimation = shouldReduceMotion || hasAnimated;
   const cvHref = lang === "es" ? "/cv/cv-samuel-ponce.pdf" : "/cv/cv-samuel-ponce-en.pdf";
 
   return (
     <section className="scroll-mt-16 py-12 sm:py-16">
       <motion.div
-        initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        initial={skipAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
+        transition={skipAnimation ? { duration: 0 } : { duration: 0.5 }}
       >
         <p className="font-mono text-sm text-emerald-400 mb-5">$ whoami</p>
         <h1 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Samuel Ponce Luna</h1>

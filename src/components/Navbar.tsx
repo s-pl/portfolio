@@ -29,12 +29,13 @@ export default function Navbar({ t, lang }: Props) {
   const sectionLinks = [
     { href: "#experience", label: t.sExperience },
     { href: "#projects", label: t.sProjects },
-    { href: "#stack", label: t.sStack },
+    { href: `/${lang}/blog`, label: t.sBlog },
     { href: "#contact", label: t.sContact },
   ];
 
   const allLinks = [
     ...sectionLinks,
+    { href: "#stack", label: t.sStack },
     { href: "#education", label: t.sEducation },
     { href: "#languages", label: t.sLanguages },
   ];

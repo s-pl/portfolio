@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { isLang, getDict } from "@/lib/i18n";
 import { PROJECTS, EXPERIENCE, EDUCATION, LANGUAGES } from "@/lib/data";
+import { BLOG_POSTS } from "@/lib/blog";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProjectList from "@/components/ProjectList";
@@ -9,6 +10,7 @@ import EducationList from "@/components/EducationList";
 import LanguagesList from "@/components/LanguagesList";
 import StackList from "@/components/StackList";
 import ContactList from "@/components/ContactList";
+import BlogList from "@/components/BlogList";
 import CookieBanner from "@/components/CookieBanner";
 
 const Divider = () => <div className="border-t border-border" />;
@@ -49,8 +51,15 @@ export default async function Page({
         <ProjectList
           projects={PROJECTS[lang]}
           label={t.sProjects}
+          labelPackages={t.sPackages}
           tagNew={t.tagNew}
           tagWip={t.tagWip}
+        />
+        <Divider />
+        <BlogList
+          posts={BLOG_POSTS.slice(0, 3)}
+          label={t.sBlog}
+          readingTimeLabel={t.blogReadingTime}
         />
         <Divider />
         <StackList label={t.sStack} lang={lang} />

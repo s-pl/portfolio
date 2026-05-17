@@ -31,8 +31,13 @@ export const metadata: Metadata = {
 const themeInitScript = `(() => {
   try {
     const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = savedTheme ? savedTheme === "dark" : prefersDark;
+    let isDark;
+    if (savedTheme === "dark" || savedTheme === "light") {
+      isDark = savedTheme === "dark";
+    } else {
+      const hour = new Date().getHours();
+      isDark = hour < 7 || hour >= 20;
+    }
     document.documentElement.classList.toggle("dark", isDark);
   } catch {
     document.documentElement.classList.add("dark");

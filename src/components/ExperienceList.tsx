@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import SectionLabel from "./SectionLabel";
 import type { Experience } from "@/lib/data";
+import { useLangContext } from "@/components/LangProvider";
 
 type CaseStudy = NonNullable<Experience["caseStudy"]>;
 
@@ -67,6 +68,8 @@ function CaseStudyBlock({
 
 export default function ExperienceList({ experience, label, caseStudyLabels, tagLabels }: Props) {
   const shouldReduceMotion = useReducedMotion();
+  const { hasAnimated } = useLangContext();
+  const skipAnimation = shouldReduceMotion || hasAnimated;
 
   return (
     <section id="experience" className="scroll-mt-16 py-10 sm:py-12">
@@ -75,9 +78,9 @@ export default function ExperienceList({ experience, label, caseStudyLabels, tag
         {experience.map((exp, i) => (
           <motion.div
             key={exp.company}
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            initial={skipAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.07 }}
+            transition={skipAnimation ? { duration: 0 } : { duration: 0.4, delay: i * 0.07 }}
             className="flex gap-4 sm:gap-6"
           >
             <div className="flex flex-col items-center">

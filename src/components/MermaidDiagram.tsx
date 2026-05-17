@@ -1,25 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useId } from "react";
-
-let initialized = false;
+import { useEffect, useRef, useState } from "react";
 
 export function MermaidDiagram({ definition }: { definition: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const rawId = useId();
-  const id = `mermaid-${rawId.replace(/[^a-zA-Z0-9]/g, "")}`;
+  const [id] = useState(() => `mermaid-${Math.random().toString(36).slice(2)}`);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const isDark = document.documentElement.classList.contains("dark");
+
+    if (containerRef.current) containerRef.current.innerHTML = "";
+
     import("mermaid").then(async (m) => {
-      if (!initialized) {
-        m.default.initialize({
-          startOnLoad: false,
-          theme: "dark",
-        });
-        initialized = true;
-      }
+      m.default.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+      });
 
       try {
         const { svg } = await m.default.render(id, definition);

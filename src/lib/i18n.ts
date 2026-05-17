@@ -167,6 +167,12 @@ export const DICT = {
     projectDecisions: "decisiones",
     projectLinks: "enlaces",
     projectDiagrams: "diagramas",
+    sPackages: "paquetes npm",
+    sBlog: "blog",
+    blogReadMore: "leer artículo",
+    blogReadingTime: "min de lectura",
+    blogBackToList: "← Volver al blog",
+    blogPublished: "publicado el",
   },
   en: {
     role: "Full Stack Developer — backend-focused · Las Palmas de Gran Canaria",
@@ -195,6 +201,12 @@ export const DICT = {
     projectDecisions: "decisions",
     projectLinks: "links",
     projectDiagrams: "diagrams",
+    sPackages: "npm packages",
+    sBlog: "blog",
+    blogReadMore: "read article",
+    blogReadingTime: "min read",
+    blogBackToList: "← Back to blog",
+    blogPublished: "published on",
   },
 } as const;
 
