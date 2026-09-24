@@ -30,7 +30,6 @@ export interface Experience {
     problem: string;
     architecture: string;
     decisions: string[];
-    diagram?: { title: string; definition: string };
   };
 }
 
@@ -485,42 +484,29 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
       role: "Full-Stack & AI Engineer",
       company: "WorkFactory · SaaS de gestión hotelera y alquiler vacacional",
       period: "jun. 2026 – actualidad",
-      desc: "Construí desde cero el **asistente IA** de la plataforma y todo lo que lo rodea: el agente, el backend en Node/TypeScript, el frontend en Angular y los canales por los que habla con los huéspedes.",
+      desc: "Diseñé y construí desde cero el agente IA que atiende a huéspedes y equipo en la plataforma. También trabajé en todo lo que lo rodea: backend en Node/TypeScript, frontend en Angular y canales de mensajería y voz.",
       highlights: [
-        "Agente IA en producción con **pydantic-ai** y **FastAPI**, trazado con **Langfuse** y desplegado de forma gradual, organización a organización",
-        "El LLM solo redacta: los datos los pone el código y cualquier cambio necesita **aprobación humana**",
-        "Bandeja única para **WhatsApp, SMS, email y voz**, con chat en tiempo real sobre **Socket.IO** y Redis y mensajes cifrados en reposo",
-        "Modo voz en tiempo real con **WebRTC** y **Gemini Live**",
-        "Secretos centralizados en **Infisical** y corrección de las vulnerabilidades que encontraron las auditorías de seguridad",
-        "Dos proyectos internos desde cero: un **scraper de precios** de la competencia guiado por IA y un **orquestador multiagente** que prepara informes de clientes potenciales",
+        "Agente en Python con pydantic-ai y FastAPI, trazado con Langfuse y activado organización a organización con kill switch",
+        "Modo revisión de punta a punta: la IA propone la respuesta o la acción y una persona la aprueba, la corrige o la descarta",
+        "Consultas SQL del agente en solo lectura: un parser que solo deja pasar un SELECT y vistas filtradas por organización",
+        "Bandeja de conversaciones en Angular que junta WhatsApp, email y voz por reserva, con resincronización en tiempo real tras cada reconexión",
+        "Modo voz del panel en Go, con WebRTC del navegador a un modelo de voz en tiempo real",
+        "Corrección de vulnerabilidades detectadas en auditorías de seguridad",
       ],
-      tech: ["TypeScript", "Angular", "Node.js", "Python", "FastAPI", "pydantic-ai", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "OpenRouter", "Langfuse", "WebRTC", "Gemini Live", "Playwright", "Docker"],
+      tech: ["Python", "FastAPI", "pydantic-ai", "TypeScript", "Node.js", "Fastify", "Angular", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "Go", "WebRTC", "OpenRouter", "Langfuse", "OpenTelemetry"],
       tag: "current",
       caseStudy: {
         title: "Asistente IA",
         problem:
-          "Un asistente que trabaja con datos reales de hoteles (reservas, cobros, huéspedes) no puede **inventarse nada** ni hacer cosas que nadie le ha pedido.",
+          "El asistente habla con huéspedes reales sobre reservas, cobros y estancias. Si se inventa una hora de entrada o da por hecha una acción que no ha hecho, el problema es del hotel.",
         architecture:
-          "Cada mensaje entra por un gateway común. El agente solo ve las **tools** que permite el rol del usuario, el código verifica los datos y un **composer determinista** monta la respuesta. Si hay que cambiar algo, queda como **propuesta** hasta que una persona la aprueba.",
+          "Los mensajes llegan por un gateway de canales a un servicio en FastAPI con el agente y estado persistente en Postgres. El agente llama a tools según el rol del usuario. Cuando la organización trabaja en modo revisión, la respuesta o la acción se queda aparcada como propuesta hasta que alguien del equipo la aprueba desde el panel.",
         decisions: [
-          "**Fail-closed**: ante un resultado dudoso, el agente prefiere no contestar a inventarse algo.",
-          "Guardrails contra **prompt injection** y fugas de datos personales en 7 idiomas.",
-          "El LLM consulta la base de datos en **solo lectura**, con vistas aisladas por organización y cada query validada antes de ejecutarse.",
-          "Las correcciones humanas sirven para **evaluar el agente** cada semana y darle más autonomía poco a poco.",
+          "El agente solo puede afirmar datos que haya devuelto una tool. Si la respuesta no cuadra con lo verificado, falla cerrado y no la envía.",
+          "El modelo no ve todas las tools: primero se filtran por rol y después se eligen por similitud semántica, con un script de evaluación para medir la selección.",
+          "Cada acción lleva un identificador idempotente y pasa por una máquina de estados con registro, así que un reintento no la ejecuta dos veces.",
+          "Lo activé organización a organización, con porcentaje por conversación y kill switch, para poder volver atrás sin desplegar.",
         ],
-        diagram: {
-          title: "de mensaje a respuesta",
-          definition: `flowchart TD
-    A["WhatsApp · SMS · email · voz"] --> B["gateway"]
-    B --> C["agente\npydantic-ai"]
-    C --> D["tools según rol"]
-    D --> E["composer determinista\nsolo datos verificados"]
-    E --> F{"cambia algo?"}
-    F -- no --> G["respuesta"]
-    F -- si --> H["propuesta\naprobación humana"]
-    classDef hl stroke:#a78bfa,stroke-width:2px
-    class C,E,H hl`,
-        },
       },
     },
     {
@@ -565,42 +551,29 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
       role: "Full-Stack & AI Engineer",
       company: "WorkFactory · Hotel & vacation rental management SaaS",
       period: "Jun 2026 – Present",
-      desc: "Built the platform's **AI assistant** from scratch, along with everything around it: the agent, the Node/TypeScript backend, the Angular frontend and the channels it uses to talk to guests.",
+      desc: "Designed and built from scratch the AI agent that talks to guests and staff on the platform. I also worked across everything around it: the Node/TypeScript backend, the Angular frontend and the messaging and voice channels.",
       highlights: [
-        "Production AI agent on **pydantic-ai** and **FastAPI**, traced with **Langfuse** and rolled out gradually, one organization at a time",
-        "The LLM only writes the wording: code supplies the data and every change needs **human approval**",
-        "One inbox for **WhatsApp, SMS, email and voice**, with real-time chat over **Socket.IO** and Redis and messages encrypted at rest",
-        "Real-time voice mode with **WebRTC** and **Gemini Live**",
-        "Centralized secrets in **Infisical** and fixed the vulnerabilities found in security audits",
-        "Two internal projects from scratch: an AI-driven **competitor price scraper** and a **multi-agent orchestrator** that prepares reports on prospective clients",
+        "Python agent on pydantic-ai and FastAPI, traced in Langfuse and switched on one organization at a time, with a kill switch",
+        "End-to-end review mode: the AI drafts the reply or action, and a person approves, edits or discards it",
+        "Read-only SQL for the agent: a parser that only lets a single SELECT through, over per-organization views",
+        "Angular inbox that groups WhatsApp, email and voice by booking and resyncs in real time after every reconnect",
+        "Voice mode for the dashboard in Go, streaming WebRTC from the browser to a real-time voice model",
+        "Fixed vulnerabilities found in security audits",
       ],
-      tech: ["TypeScript", "Angular", "Node.js", "Python", "FastAPI", "pydantic-ai", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "OpenRouter", "Langfuse", "WebRTC", "Gemini Live", "Playwright", "Docker"],
+      tech: ["Python", "FastAPI", "pydantic-ai", "TypeScript", "Node.js", "Fastify", "Angular", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "Go", "WebRTC", "OpenRouter", "Langfuse", "OpenTelemetry"],
       tag: "current",
       caseStudy: {
         title: "AI assistant",
         problem:
-          "An assistant working with real hotel data (bookings, payments, guests) can't **make anything up** or do things nobody asked for.",
+          "The assistant talks to real guests about bookings, payments and stays. If it makes up a check-in time or claims it did something it didn't, the hotel pays for it.",
         architecture:
-          "Every message comes in through a shared gateway. The agent only sees the **tools** the user's role allows, code verifies the data and a **deterministic composer** builds the reply. Anything that changes data stays a **proposal** until a person approves it.",
+          "Messages come in through a channel gateway and reach a FastAPI service that runs the agent, with persistent state in Postgres. The agent calls tools based on the user's role. When an organization runs in review mode, the reply or action is held as a proposal until someone on the team approves it from the dashboard.",
         decisions: [
-          "**Fail-closed**: when a result is doubtful, the agent would rather not answer than make something up.",
-          "Guardrails against **prompt injection** and personal data leaks in 7 languages.",
-          "The LLM queries the database **read-only**, through per-organization views, with every query validated before it runs.",
-          "Human corrections feed **weekly evals** of the agent and gradually earn it more autonomy.",
+          "The agent can only state facts a tool has returned. If a reply doesn't match what was verified, it fails closed and isn't sent.",
+          "The model never sees every tool: they're filtered by role first, then picked by semantic similarity, with an eval script to measure the selection.",
+          "Every action carries an idempotency key and goes through a logged state machine, so a retry never runs it twice.",
+          "I rolled it out one organization at a time, with a per-conversation percentage and a kill switch, so I could back out without a deploy.",
         ],
-        diagram: {
-          title: "from message to reply",
-          definition: `flowchart TD
-    A["WhatsApp · SMS · email · voice"] --> B["gateway"]
-    B --> C["agent\npydantic-ai"]
-    C --> D["tools by role"]
-    D --> E["deterministic composer\nverified data only"]
-    E --> F{"changes data?"}
-    F -- no --> G["reply"]
-    F -- yes --> H["proposal\nhuman approval"]
-    classDef hl stroke:#a78bfa,stroke-width:2px
-    class C,E,H hl`,
-        },
       },
     },
     {
