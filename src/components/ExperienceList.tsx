@@ -84,7 +84,14 @@ export default function ExperienceList({ experience, label, caseStudyLabels, tag
             className="flex gap-4 sm:gap-6"
           >
             <div className="flex flex-col items-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+              {exp.tag === "current" ? (
+                <span className="relative mt-1.5 flex h-1.5 w-1.5 shrink-0">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </span>
+              ) : (
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+              )}
               {i < experience.length - 1 && <div className="w-px flex-1 bg-border mt-2" />}
             </div>
             <div className="min-w-0 pb-2">
@@ -99,6 +106,16 @@ export default function ExperienceList({ experience, label, caseStudyLabels, tag
               <p className="mb-2 break-words font-mono text-sm text-muted-foreground/70">
                 {exp.company} · {exp.period}
               </p>
+              {exp.stats && exp.stats.length > 0 && (
+                <p className="mb-2 flex flex-wrap gap-x-2 font-mono text-sm text-emerald-400/80">
+                  {exp.stats.map((stat, j) => (
+                    <span key={stat}>
+                      {j > 0 && <span className="mr-2 text-muted-foreground/40">·</span>}
+                      {stat}
+                    </span>
+                  ))}
+                </p>
+              )}
               <p className="text-base text-muted-foreground leading-relaxed">{exp.desc}</p>
               {exp.highlights && exp.highlights.length > 0 && (
                 <ul className="mt-2 space-y-1">

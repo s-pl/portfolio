@@ -141,8 +141,8 @@ export const COOKIE_COPY: Record<Lang, CookieCopy> = {
 
 export const DICT = {
   es: {
-    role: "Full Stack Developer — foco en backend · Las Palmas de Gran Canaria",
-    desc: "Full stack con foco en backend. Prácticas Erasmus en C-Link (Londres), startup de IA para el sector de la construcción. Diseño APIs, workers asíncronos y sistemas de observabilidad. En frontend con Next.js, Tailwind y el ecosistema React.",
+    role: "Full-Stack & AI Engineer en WorkFactory · Las Palmas de Gran Canaria",
+    desc: "Full stack con foco en agentes IA en producción. En WorkFactory construyo a Carmela, el asistente IA de un SaaS hotelero, de punta a punta: runtime del agente, gateway multicanal, tools y frontend. Antes hice prácticas Erasmus en C-Link (Londres), con pipelines LLM para el sector de la construcción.",
     ctaProjects: "Ver proyectos",
     ctaContact: "Contactar",
     ctaCV: "Descargar CV",
@@ -160,6 +160,7 @@ export const DICT = {
     caseStudyArchitecture: "arquitectura",
     caseStudyDecisions: "decisiones",
     tagErasmus: "erasmus",
+    tagCurrent: "actual",
     viewProject: "Ver proyecto",
     backToProjects: "← Volver a proyectos",
     projectProblem: "problema",
@@ -175,8 +176,8 @@ export const DICT = {
     blogPublished: "publicado el",
   },
   en: {
-    role: "Full Stack Developer — backend-focused · Las Palmas de Gran Canaria",
-    desc: "Full stack focused on backend. Erasmus placement at C-Link (London), an AI startup in the construction industry. I design APIs, async workers and observability systems. On the frontend with Next.js, Tailwind and the React ecosystem.",
+    role: "Full-Stack & AI Engineer at WorkFactory · Las Palmas de Gran Canaria",
+    desc: "Full stack, focused on production AI agents. At WorkFactory I build Carmela, the AI assistant of a hotel management SaaS, end to end: the agent runtime, the multichannel gateway, the tools and the frontend. Before that, an Erasmus placement at C-Link (London) building LLM pipelines for the construction industry.",
     ctaProjects: "View projects",
     ctaContact: "Get in touch",
     ctaCV: "Download CV",
@@ -194,6 +195,7 @@ export const DICT = {
     caseStudyArchitecture: "architecture",
     caseStudyDecisions: "decisions",
     tagErasmus: "erasmus",
+    tagCurrent: "current",
     viewProject: "View project",
     backToProjects: "← Back to projects",
     projectProblem: "problem",
