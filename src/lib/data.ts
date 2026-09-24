@@ -25,12 +25,12 @@ export interface Experience {
   highlights?: string[];
   tech?: string[];
   tag?: string;
-  stats?: string[];
   caseStudy?: {
     title: string;
     problem: string;
     architecture: string;
     decisions: string[];
+    diagram?: { title: string; definition: string };
   };
 }
 
@@ -485,32 +485,42 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
       role: "Full-Stack & AI Engineer",
       company: "WorkFactory · SaaS de gestión hotelera y alquiler vacacional",
       period: "jun. 2026 – actualidad",
-      desc: "Construyo agentes IA en producción de punta a punta: el runtime de Carmela, el asistente IA de la plataforma, su gateway multicanal (WhatsApp, SMS, email y voz), la capa de tools, el frontend en Angular, el backend en Node/TypeScript y la infraestructura.",
-      stats: ["~3.400 commits", "20 repos", "3 meses"],
+      desc: "Construí desde cero el **asistente IA** de la plataforma y todo lo que lo rodea: el agente, el backend en Node/TypeScript, el frontend en Angular y los canales por los que habla con los huéspedes.",
       highlights: [
-        "Runtime del agente IA diseñado desde cero y en producción: ~92 % de la autoría en 7 semanas",
-        "Tools con toolset dinámico según RBAC, recuperación semántica (embeddings + reranker) y ejecución en paralelo",
-        "Text-to-SQL de solo lectura aislado por organización: vistas curadas, validador AST (un único SELECT, allowlist, LIMIT forzado), roles read-only y timeout",
-        "Bandeja omnicanal en Angular 21 con signals y RxJS: chat en tiempo real con Socket.IO sobre Redis, streaming de respuestas IA y cifrado en reposo con envelope encryption AES-256-GCM",
-        "Modo voz en tiempo real con WebRTC, Gemini Live y TTS en streaming",
-        "Mapa 3D inmersivo con MapLibre y three.js, con edificios generados a partir de datos catastrales",
-        "Plataforma y seguridad: secretos migrados a Infisical con inyección en runtime en más de 11 servicios, rotación de credenciales, remediación de SSRF y de replay de refresh tokens, 87 migraciones SQL y 188 ficheros de test nuevos",
-        "Proyectos internos creados desde cero: un scraper de precios de la competencia con un agente de navegación en Playwright (cola en Postgres con SKIP LOCKED, Ports & Adapters) y un orquestador multiagente que genera dossiers de prospectos con DAFO y PDF de marca",
+        "Agente IA en producción con **pydantic-ai** y **FastAPI**, trazado con **Langfuse** y desplegado de forma gradual, organización a organización",
+        "El LLM solo redacta: los datos los pone el código y cualquier cambio necesita **aprobación humana**",
+        "Bandeja única para **WhatsApp, SMS, email y voz**, con chat en tiempo real sobre **Socket.IO** y Redis y mensajes cifrados en reposo",
+        "Modo voz en tiempo real con **WebRTC** y **Gemini Live**",
+        "Secretos centralizados en **Infisical** y corrección de las vulnerabilidades que encontraron las auditorías de seguridad",
+        "Dos proyectos internos desde cero: un **scraper de precios** de la competencia guiado por IA y un **orquestador multiagente** que prepara informes de clientes potenciales",
       ],
-      tech: ["TypeScript", "Angular 21", "RxJS", "Node.js", "Python", "FastAPI", "pydantic-ai", "Go", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "OpenRouter", "Gemini Live", "Langfuse", "OpenTelemetry", "WebRTC", "three.js", "Playwright", "Infisical", "Docker"],
+      tech: ["TypeScript", "Angular", "Node.js", "Python", "FastAPI", "pydantic-ai", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "OpenRouter", "Langfuse", "WebRTC", "Gemini Live", "Playwright", "Docker"],
       tag: "current",
       caseStudy: {
-        title: "Carmela, el runtime del agente IA",
+        title: "Asistente IA",
         problem:
-          "Un asistente que opera sobre datos reales de hoteles (reservas, cobros, huéspedes) no puede inventarse nada ni ejecutar acciones que nadie ha pedido, y tiene que responder por WhatsApp, SMS, email y voz en cualquier idioma.",
+          "Un asistente que trabaja con datos reales de hoteles (reservas, cobros, huéspedes) no puede **inventarse nada** ni hacer cosas que nadie le ha pedido.",
         architecture:
-          "Gateway multicanal → runtime en Python (pydantic-ai + FastAPI, contratos tipados, OpenRouter) → recuperación semántica de tools según RBAC → registro de hechos verificados → composer determinista → propuestas con aprobación humana. Trazas con Langfuse sobre OpenTelemetry, prompts versionados y despliegue canary por organización.",
+          "Cada mensaje entra por un gateway común. El agente solo ve las **tools** que permite el rol del usuario, el código verifica los datos y un **composer determinista** monta la respuesta. Si hay que cambiar algo, queda como **propuesta** hasta que una persona la aprueba.",
         decisions: [
-          "El LLM solo redacta: el grounding lo impone el código, y ante un resultado dudoso el agente falla de forma cerrada.",
-          "Guardrails contra prompt injection, PII y acciones fantasma en 7 idiomas.",
-          "Human-in-the-loop: toda escritura es una propuesta que aprueba una persona, y cada corrección se convierte en una señal para la evaluación semanal y la autonomía graduada.",
-          "Tools idempotentes con allowlist por rol, llamadas firmadas entre servicios y kill-switch por tool.",
+          "**Fail-closed**: ante un resultado dudoso, el agente prefiere no contestar a inventarse algo.",
+          "Guardrails contra **prompt injection** y fugas de datos personales en 7 idiomas.",
+          "El LLM consulta la base de datos en **solo lectura**, con vistas aisladas por organización y cada query validada antes de ejecutarse.",
+          "Las correcciones humanas sirven para **evaluar el agente** cada semana y darle más autonomía poco a poco.",
         ],
+        diagram: {
+          title: "de mensaje a respuesta",
+          definition: `flowchart TD
+    A["WhatsApp · SMS · email · voz"] --> B["gateway"]
+    B --> C["agente\npydantic-ai"]
+    C --> D["tools según rol"]
+    D --> E["composer determinista\nsolo datos verificados"]
+    E --> F{"cambia algo?"}
+    F -- no --> G["respuesta"]
+    F -- si --> H["propuesta\naprobación humana"]
+    classDef hl stroke:#a78bfa,stroke-width:2px
+    class C,E,H hl`,
+        },
       },
     },
     {
@@ -555,32 +565,42 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
       role: "Full-Stack & AI Engineer",
       company: "WorkFactory · Hotel & vacation rental management SaaS",
       period: "Jun 2026 – Present",
-      desc: "I build production AI agents end to end: the runtime behind Carmela, the platform's AI assistant, its multichannel gateway (WhatsApp, SMS, email and voice), the tool layer, the Angular frontend, the Node/TypeScript backend and the infrastructure.",
-      stats: ["~3,400 commits", "20 repos", "3 months"],
+      desc: "Built the platform's **AI assistant** from scratch, along with everything around it: the agent, the Node/TypeScript backend, the Angular frontend and the channels it uses to talk to guests.",
       highlights: [
-        "Designed and shipped the production AI agent runtime from scratch: ~92% authorship in 7 weeks",
-        "Agent tools with an RBAC-scoped dynamic toolset, semantic retrieval (embeddings + reranker) and parallel execution",
-        "Read-only text-to-SQL isolated per organization: curated views, AST validator (single SELECT, allowlist, enforced LIMIT), read-only roles and timeouts",
-        "Omnichannel inbox in Angular 21 with signals and RxJS: real-time chat over Socket.IO on Redis, streamed AI responses and AES-256-GCM envelope encryption at rest",
-        "Real-time voice mode with WebRTC, Gemini Live and streaming TTS",
-        "Immersive 3D map with MapLibre and three.js, with buildings generated from cadastral data",
-        "Platform and security: migrated secrets to Infisical with runtime injection across 11+ services, credential rotation, fixes for SSRF and refresh-token replay, 87 SQL migrations and 188 new test files",
-        "Internal projects built from scratch: a competitor price scraper driven by a Playwright browsing agent (Postgres queue with SKIP LOCKED, Ports & Adapters) and a multi-agent orchestrator that produces prospect dossiers with a SWOT analysis and a branded PDF",
+        "Production AI agent on **pydantic-ai** and **FastAPI**, traced with **Langfuse** and rolled out gradually, one organization at a time",
+        "The LLM only writes the wording: code supplies the data and every change needs **human approval**",
+        "One inbox for **WhatsApp, SMS, email and voice**, with real-time chat over **Socket.IO** and Redis and messages encrypted at rest",
+        "Real-time voice mode with **WebRTC** and **Gemini Live**",
+        "Centralized secrets in **Infisical** and fixed the vulnerabilities found in security audits",
+        "Two internal projects from scratch: an AI-driven **competitor price scraper** and a **multi-agent orchestrator** that prepares reports on prospective clients",
       ],
-      tech: ["TypeScript", "Angular 21", "RxJS", "Node.js", "Python", "FastAPI", "pydantic-ai", "Go", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "OpenRouter", "Gemini Live", "Langfuse", "OpenTelemetry", "WebRTC", "three.js", "Playwright", "Infisical", "Docker"],
+      tech: ["TypeScript", "Angular", "Node.js", "Python", "FastAPI", "pydantic-ai", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "OpenRouter", "Langfuse", "WebRTC", "Gemini Live", "Playwright", "Docker"],
       tag: "current",
       caseStudy: {
-        title: "Carmela, the AI agent runtime",
+        title: "AI assistant",
         problem:
-          "An assistant working on real hotel data (bookings, payments, guests) can't make anything up or take actions nobody asked for, and it has to answer over WhatsApp, SMS, email and voice in any language.",
+          "An assistant working with real hotel data (bookings, payments, guests) can't **make anything up** or do things nobody asked for.",
         architecture:
-          "Multichannel gateway → Python runtime (pydantic-ai + FastAPI, typed contracts, OpenRouter) → RBAC-scoped semantic tool retrieval → verified-facts registry → deterministic composer → proposals approved by a human. Langfuse tracing on OpenTelemetry, versioned prompts and per-organization canary rollouts.",
+          "Every message comes in through a shared gateway. The agent only sees the **tools** the user's role allows, code verifies the data and a **deterministic composer** builds the reply. Anything that changes data stays a **proposal** until a person approves it.",
         decisions: [
-          "The LLM only writes the wording: code enforces grounding, and the agent fails closed on doubtful results.",
-          "Guardrails against prompt injection, PII leaks and phantom actions in 7 languages.",
-          "Human-in-the-loop: every write is a proposal a person approves, and each correction becomes a signal for weekly evals and graduated autonomy.",
-          "Idempotent tools with per-role allowlists, signed service-to-service calls and a per-tool kill switch.",
+          "**Fail-closed**: when a result is doubtful, the agent would rather not answer than make something up.",
+          "Guardrails against **prompt injection** and personal data leaks in 7 languages.",
+          "The LLM queries the database **read-only**, through per-organization views, with every query validated before it runs.",
+          "Human corrections feed **weekly evals** of the agent and gradually earn it more autonomy.",
         ],
+        diagram: {
+          title: "from message to reply",
+          definition: `flowchart TD
+    A["WhatsApp · SMS · email · voice"] --> B["gateway"]
+    B --> C["agent\npydantic-ai"]
+    C --> D["tools by role"]
+    D --> E["deterministic composer\nverified data only"]
+    E --> F{"changes data?"}
+    F -- no --> G["reply"]
+    F -- yes --> H["proposal\nhuman approval"]
+    classDef hl stroke:#a78bfa,stroke-width:2px
+    class C,E,H hl`,
+        },
       },
     },
     {
