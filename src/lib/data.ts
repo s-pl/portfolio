@@ -25,6 +25,7 @@ export interface Experience {
   highlights?: string[];
   tech?: string[];
   tag?: string;
+  stats?: string[];
   caseStudy?: {
     title: string;
     problem: string;
@@ -481,6 +482,38 @@ export const PROJECTS: Record<Lang, Project[]> = {
 export const EXPERIENCE: Record<Lang, Experience[]> = {
   es: [
     {
+      role: "Full-Stack & AI Engineer",
+      company: "WorkFactory · SaaS de gestión hotelera y alquiler vacacional",
+      period: "jun. 2026 – actualidad",
+      desc: "Construyo agentes IA en producción de punta a punta: el runtime de Carmela, el asistente IA de la plataforma, su gateway multicanal (WhatsApp, SMS, email y voz), la capa de tools, el frontend en Angular, el backend en Node/TypeScript y la infraestructura.",
+      stats: ["~3.400 commits", "20 repos", "3 meses"],
+      highlights: [
+        "Runtime del agente IA diseñado desde cero y en producción: ~92 % de la autoría en 7 semanas",
+        "Tools con toolset dinámico según RBAC, recuperación semántica (embeddings + reranker) y ejecución en paralelo",
+        "Text-to-SQL de solo lectura aislado por organización: vistas curadas, validador AST (un único SELECT, allowlist, LIMIT forzado), roles read-only y timeout",
+        "Bandeja omnicanal en Angular 21 con signals y RxJS: chat en tiempo real con Socket.IO sobre Redis, streaming de respuestas IA y cifrado en reposo con envelope encryption AES-256-GCM",
+        "Modo voz en tiempo real con WebRTC, Gemini Live y TTS en streaming",
+        "Mapa 3D inmersivo con MapLibre y three.js, con edificios generados a partir de datos catastrales",
+        "Plataforma y seguridad: secretos migrados a Infisical con inyección en runtime en más de 11 servicios, rotación de credenciales, remediación de SSRF y de replay de refresh tokens, 87 migraciones SQL y 188 ficheros de test nuevos",
+        "Proyectos internos creados desde cero: un scraper de precios de la competencia con un agente de navegación en Playwright (cola en Postgres con SKIP LOCKED, Ports & Adapters) y un orquestador multiagente que genera dossiers de prospectos con DAFO y PDF de marca",
+      ],
+      tech: ["TypeScript", "Angular 21", "RxJS", "Node.js", "Python", "FastAPI", "pydantic-ai", "Go", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "OpenRouter", "Gemini Live", "Langfuse", "OpenTelemetry", "WebRTC", "three.js", "Playwright", "Infisical", "Docker"],
+      tag: "current",
+      caseStudy: {
+        title: "Carmela, el runtime del agente IA",
+        problem:
+          "Un asistente que opera sobre datos reales de hoteles (reservas, cobros, huéspedes) no puede inventarse nada ni ejecutar acciones que nadie ha pedido, y tiene que responder por WhatsApp, SMS, email y voz en cualquier idioma.",
+        architecture:
+          "Gateway multicanal → runtime en Python (pydantic-ai + FastAPI, contratos tipados, OpenRouter) → recuperación semántica de tools según RBAC → registro de hechos verificados → composer determinista → propuestas con aprobación humana. Trazas con Langfuse sobre OpenTelemetry, prompts versionados y despliegue canary por organización.",
+        decisions: [
+          "El LLM solo redacta: el grounding lo impone el código, y ante un resultado dudoso el agente falla de forma cerrada.",
+          "Guardrails contra prompt injection, PII y acciones fantasma en 7 idiomas.",
+          "Human-in-the-loop: toda escritura es una propuesta que aprueba una persona, y cada corrección se convierte en una señal para la evaluación semanal y la autonomía graduada.",
+          "Tools idempotentes con allowlist por rol, llamadas firmadas entre servicios y kill-switch por tool.",
+        ],
+      },
+    },
+    {
       role: "Full Stack Developer Intern",
       company: "C-Link · Londres, Reino Unido",
       period: "ene. 2026 – may. 2026",
@@ -518,6 +551,38 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
     },
   ],
   en: [
+    {
+      role: "Full-Stack & AI Engineer",
+      company: "WorkFactory · Hotel & vacation rental management SaaS",
+      period: "Jun 2026 – Present",
+      desc: "I build production AI agents end to end: the runtime behind Carmela, the platform's AI assistant, its multichannel gateway (WhatsApp, SMS, email and voice), the tool layer, the Angular frontend, the Node/TypeScript backend and the infrastructure.",
+      stats: ["~3,400 commits", "20 repos", "3 months"],
+      highlights: [
+        "Designed and shipped the production AI agent runtime from scratch: ~92% authorship in 7 weeks",
+        "Agent tools with an RBAC-scoped dynamic toolset, semantic retrieval (embeddings + reranker) and parallel execution",
+        "Read-only text-to-SQL isolated per organization: curated views, AST validator (single SELECT, allowlist, enforced LIMIT), read-only roles and timeouts",
+        "Omnichannel inbox in Angular 21 with signals and RxJS: real-time chat over Socket.IO on Redis, streamed AI responses and AES-256-GCM envelope encryption at rest",
+        "Real-time voice mode with WebRTC, Gemini Live and streaming TTS",
+        "Immersive 3D map with MapLibre and three.js, with buildings generated from cadastral data",
+        "Platform and security: migrated secrets to Infisical with runtime injection across 11+ services, credential rotation, fixes for SSRF and refresh-token replay, 87 SQL migrations and 188 new test files",
+        "Internal projects built from scratch: a competitor price scraper driven by a Playwright browsing agent (Postgres queue with SKIP LOCKED, Ports & Adapters) and a multi-agent orchestrator that produces prospect dossiers with a SWOT analysis and a branded PDF",
+      ],
+      tech: ["TypeScript", "Angular 21", "RxJS", "Node.js", "Python", "FastAPI", "pydantic-ai", "Go", "PostgreSQL", "pgvector", "Redis", "Socket.IO", "OpenRouter", "Gemini Live", "Langfuse", "OpenTelemetry", "WebRTC", "three.js", "Playwright", "Infisical", "Docker"],
+      tag: "current",
+      caseStudy: {
+        title: "Carmela, the AI agent runtime",
+        problem:
+          "An assistant working on real hotel data (bookings, payments, guests) can't make anything up or take actions nobody asked for, and it has to answer over WhatsApp, SMS, email and voice in any language.",
+        architecture:
+          "Multichannel gateway → Python runtime (pydantic-ai + FastAPI, typed contracts, OpenRouter) → RBAC-scoped semantic tool retrieval → verified-facts registry → deterministic composer → proposals approved by a human. Langfuse tracing on OpenTelemetry, versioned prompts and per-organization canary rollouts.",
+        decisions: [
+          "The LLM only writes the wording: code enforces grounding, and the agent fails closed on doubtful results.",
+          "Guardrails against prompt injection, PII leaks and phantom actions in 7 languages.",
+          "Human-in-the-loop: every write is a proposal a person approves, and each correction becomes a signal for weekly evals and graduated autonomy.",
+          "Idempotent tools with per-role allowlists, signed service-to-service calls and a per-tool kill switch.",
+        ],
+      },
+    },
     {
       role: "Full Stack Developer Intern",
       company: "C-Link · London, UK",
@@ -558,11 +623,11 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
 };
 
 export const STACK: Record<string, string[]> = {
-  backend: ["Python", "Node.js", "FastAPI", "Flask", "Express", "Celery", "REST APIs"],
-  databases: ["PostgreSQL", "MySQL", "Redis", "MongoDB", "SQLite", "Firebase"],
-  frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "Framer Motion", "Zustand"],
+  backend: ["Python", "Node.js", "Go", "FastAPI", "Flask", "Express", "Celery", "REST APIs"],
+  databases: ["PostgreSQL", "pgvector", "MySQL", "Redis", "MongoDB", "SQLite", "Firebase"],
+  frontend: ["React", "Next.js", "Angular", "TypeScript", "Tailwind CSS", "shadcn/ui", "Framer Motion", "Zustand"],
   devops: ["Docker", "Linux", "Git", "GitHub Actions", "Vercel", "New Relic APM", "Sentry"],
-  ai: ["Claude API", "Prompt Engineering", "LLM Pipelines"],
+  ai: ["AI Agents", "pydantic-ai", "Claude API", "OpenRouter", "Langfuse", "RAG", "LLM Pipelines"],
 };
 
 export const STACK_LABELS: Record<Lang, Record<string, string>> = {

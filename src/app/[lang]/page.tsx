@@ -43,7 +43,7 @@ export default async function Page({
             architecture: t.caseStudyArchitecture,
             decisions: t.caseStudyDecisions,
           }}
-          tagLabels={{ erasmus: t.tagErasmus }}
+          tagLabels={{ erasmus: t.tagErasmus, current: t.tagCurrent }}
         />
         <Divider />
         <ProjectList
