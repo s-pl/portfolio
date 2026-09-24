@@ -142,7 +142,7 @@ export const COOKIE_COPY: Record<Lang, CookieCopy> = {
 export const DICT = {
   es: {
     role: "Full-Stack & AI Engineer en WorkFactory · Las Palmas de Gran Canaria",
-    desc: "Full stack con foco en agentes IA en producción. En WorkFactory construí de punta a punta el asistente IA de un SaaS hotelero: runtime del agente, gateway multicanal, tools y frontend. Antes hice prácticas Erasmus en C-Link (Londres), con pipelines LLM para el sector de la construcción.",
+    desc: "Full stack con foco en agentes IA en producción. En WorkFactory diseñé y construí el agente IA de un SaaS hotelero, desde el runtime y sus tools hasta la bandeja donde el equipo revisa lo que propone. Antes hice prácticas Erasmus en C-Link (Londres), con pipelines LLM para el sector de la construcción.",
     ctaProjects: "Ver proyectos",
     ctaContact: "Contactar",
     ctaCV: "Descargar CV",
@@ -177,7 +177,7 @@ export const DICT = {
   },
   en: {
     role: "Full-Stack & AI Engineer at WorkFactory · Las Palmas de Gran Canaria",
-    desc: "Full stack, focused on production AI agents. At WorkFactory I built the AI assistant of a hotel management SaaS end to end: the agent runtime, the multichannel gateway, the tools and the frontend. Before that, an Erasmus placement at C-Link (London) building LLM pipelines for the construction industry.",
+    desc: "Full stack, focused on AI agents in production. At WorkFactory I designed and built the AI agent for a hotel management SaaS, from the runtime and its tools to the inbox where the team reviews what it proposes. Before that, an Erasmus placement at C-Link in London, building LLM pipelines for the construction industry.",
     ctaProjects: "View projects",
     ctaContact: "Get in touch",
     ctaCV: "Download CV",

@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import SectionLabel from "./SectionLabel";
-import { MermaidDiagram } from "./MermaidDiagram";
 import type { Experience } from "@/lib/data";
 import { useLangContext } from "@/components/LangProvider";
 
@@ -21,23 +20,6 @@ interface Props {
   label: string;
   caseStudyLabels: CaseStudyLabels;
   tagLabels?: Record<string, string>;
-}
-
-// **texto** → resaltado en violeta
-function Highlighted({ text }: { text: string }) {
-  return (
-    <>
-      {text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
-        i % 2 === 1 ? (
-          <span key={i} className="font-medium text-violet-600 dark:text-violet-400">
-            {part}
-          </span>
-        ) : (
-          part
-        ),
-      )}
-    </>
-  );
 }
 
 function CaseStudyBlock({
@@ -60,24 +42,13 @@ function CaseStudyBlock({
       <div className="mt-4 flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <p className="font-mono text-xs text-emerald-400/80">{labels.problem}</p>
-          <p className="text-base leading-relaxed text-muted-foreground">
-            <Highlighted text={caseStudy.problem} />
-          </p>
+          <p className="text-base leading-relaxed text-muted-foreground">{caseStudy.problem}</p>
         </div>
 
         <div className="flex flex-col gap-1.5">
           <p className="font-mono text-xs text-emerald-400/80">{labels.architecture}</p>
-          <p className="text-base leading-relaxed text-muted-foreground">
-            <Highlighted text={caseStudy.architecture} />
-          </p>
+          <p className="text-base leading-relaxed text-muted-foreground">{caseStudy.architecture}</p>
         </div>
-
-        {caseStudy.diagram && (
-          <div className="flex flex-col gap-2">
-            <p className="font-mono text-xs text-muted-foreground/60">{"// "}{caseStudy.diagram.title}</p>
-            <MermaidDiagram definition={caseStudy.diagram.definition} />
-          </div>
-        )}
 
         <div className="flex flex-col gap-1.5">
           <p className="font-mono text-xs text-emerald-400/80">{labels.decisions}</p>
@@ -85,9 +56,7 @@ function CaseStudyBlock({
             {caseStudy.decisions.map((decision) => (
               <li key={decision} className="flex gap-2 text-base text-muted-foreground">
                 <span className="mt-0.5 shrink-0 text-emerald-400">›</span>
-                <span>
-                  <Highlighted text={decision} />
-                </span>
+                <span>{decision}</span>
               </li>
             ))}
           </ul>
@@ -137,17 +106,13 @@ export default function ExperienceList({ experience, label, caseStudyLabels, tag
               <p className="mb-2 break-words font-mono text-sm text-muted-foreground/70">
                 {exp.company} · {exp.period}
               </p>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                <Highlighted text={exp.desc} />
-              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">{exp.desc}</p>
               {exp.highlights && exp.highlights.length > 0 && (
                 <ul className="mt-2 space-y-1">
                   {exp.highlights.map((h) => (
                     <li key={h} className="flex gap-2 text-base text-muted-foreground">
                       <span className="text-emerald-400 shrink-0 mt-0.5">›</span>
-                      <span>
-                        <Highlighted text={h} />
-                      </span>
+                      <span>{h}</span>
                     </li>
                   ))}
                 </ul>
