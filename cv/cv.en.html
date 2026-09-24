@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>CV · Samuel Ponce Luna</title>
+    <link rel="stylesheet" href="cv.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Samuel Ponce Luna</h1>
+      <p class="role">Full-Stack &amp; AI Engineer</p>
+      <p class="contact">
+        <span>Las Palmas de Gran Canaria, Spain</span>
+        <span><a href="mailto:contacto@samuelponce.es">contacto@samuelponce.es</a></span>
+        <span>+34 691 18 99 61</span>
+      </p>
+      <p class="contact">
+        <span><a href="https://samuelponce.es">samuelponce.es</a></span>
+        <span><a href="https://github.com/s-pl">github.com/s-pl</a></span>
+        <span><a href="https://www.linkedin.com/in/samuel-ponce-luna-aba75b2b8">LinkedIn</a></span>
+      </p>
+    </header>
+
+    <section>
+      <h2>profile</h2>
+      <p class="summary">
+        Full stack, focused on AI agents in production. At WorkFactory I designed and built the AI agent for a hotel
+        management SaaS, from the runtime and its tools to the inbox where the team reviews what it proposes. Before
+        that, at C-Link in London, I worked on LLM pipelines, async workers and production observability.
+      </p>
+    </section>
+
+    <section>
+      <h2>experience</h2>
+
+      <div class="job">
+        <div class="job-head">
+          <p class="job-title">
+            Full-Stack &amp; AI Engineer <span class="company">· WorkFactory</span><span class="tag">current</span>
+          </p>
+          <p class="period">Jun 2026 – Present</p>
+        </div>
+        <p class="meta">Hotel &amp; vacation rental management SaaS</p>
+        <ul>
+          <li>Designed and built the AI agent from scratch: Python, pydantic-ai, FastAPI, state in Postgres and Langfuse tracing.</li>
+          <li>The agent only states facts a tool has returned; if something doesn't match, it fails closed and nothing is sent.</li>
+          <li>End-to-end review mode: the AI drafts a reply or action, and a person approves, edits or discards it.</li>
+          <li>Tools filtered by role and picked by semantic similarity, with idempotent actions running through a state machine.</li>
+          <li>Read-only SQL for the agent: a parser that only allows a single SELECT, over per-organization views.</li>
+          <li>Angular inbox (WhatsApp, email and voice grouped by booking) and a dashboard voice mode in Go over WebRTC.</li>
+        </ul>
+        <div class="chips">
+          <span>Python</span><span>FastAPI</span><span>pydantic-ai</span><span>TypeScript</span><span>Node.js</span><span>Angular</span><span>Go</span><span>PostgreSQL</span><span>Redis</span><span>WebRTC</span><span>Langfuse</span>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <p class="job-title">Full Stack Developer <span class="company">· C-Link</span><span class="tag">erasmus</span></p>
+          <p class="period">Jan 2026 – May 2026</p>
+        </div>
+        <p class="meta">London, UK · AI startup for construction tenders</p>
+        <ul>
+          <li>Built the Bills of Quantities analysis module end to end: schema, private REST API, Celery pipeline and tests.</li>
+          <li>LLM cost and token-usage accounting per analysis type.</li>
+          <li>New Relic APM in production (distributed traces, metrics and alerts), alongside Sentry for errors.</li>
+          <li>Fixed a race condition in Celery workers with late acknowledgement and refactored document ingestion.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <p class="job-title">Web Developer <span class="company">· Astican</span><span class="tag">placement</span></p>
+          <p class="period">2025</p>
+        </div>
+        <p class="meta">Las Palmas de Gran Canaria · shipyard</p>
+        <p class="desc">Internal applications: new features on the existing stack and less technical debt in legacy modules.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>projects</h2>
+      <div class="projects">
+        <div class="project">
+          <p class="project-name">lightq-node<span class="kind">npm</span></p>
+          <p>Zero-dependency in-memory job queue: concurrency, priorities, retries with backoff and cancellation.</p>
+          <p class="stack">Node.js · TypeScript</p>
+        </div>
+        <div class="project">
+          <p class="project-name">cron-scheduler-ts<span class="kind">npm</span></p>
+          <p>Zero-dependency cron scheduler with pluggable persistence, missed-job detection and no drift.</p>
+          <p class="stack">Node.js · TypeScript</p>
+        </div>
+        <div class="project">
+          <p class="project-name">envshare</p>
+          <p>Secure sharing of environment variables across teams: encryption, per-secret TTL and single-use access.</p>
+          <p class="stack">Next.js · TypeScript · Redis</p>
+        </div>
+        <div class="project">
+          <p class="project-name">EzPass</p>
+          <p>Real-time P2P file transfer between mobile and desktop, with no sign-up and nothing to install.</p>
+          <p class="stack">Node.js · Socket.IO</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>stack</h2>
+      <dl class="skills">
+        <dt>backend</dt>
+        <dd>Python, FastAPI, Node.js, TypeScript, Express, Go, Celery</dd>
+        <dt>frontend</dt>
+        <dd>Angular, React, Next.js, Tailwind CSS</dd>
+        <dt>data</dt>
+        <dd>PostgreSQL, pgvector, Redis, MySQL, MongoDB</dd>
+        <dt>ai</dt>
+        <dd>LLM agents, pydantic-ai, semantic search, OpenRouter, Claude API, Langfuse</dd>
+        <dt>infra</dt>
+        <dd>Docker, Linux, GitHub Actions, Vercel, OpenTelemetry, New Relic, Sentry</dd>
+      </dl>
+    </section>
+
+    <section class="two-col">
+      <div>
+        <h2>education</h2>
+        <p class="item-title">Higher National Diploma in Web Application Development</p>
+        <p class="meta">IES El Rincón · Las Palmas de Gran Canaria · 2023 – 2026</p>
+      </div>
+      <div>
+        <h2>languages</h2>
+        <p class="item-title">Spanish <span class="meta">native</span></p>
+        <p class="item-title">English <span class="meta">B2 · EOI</span></p>
+      </div>
+    </section>
+  </body>
+</html>

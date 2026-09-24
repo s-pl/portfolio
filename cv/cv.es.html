@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>CV · Samuel Ponce Luna</title>
+    <link rel="stylesheet" href="cv.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Samuel Ponce Luna</h1>
+      <p class="role">Full-Stack &amp; AI Engineer</p>
+      <p class="contact">
+        <span>Las Palmas de Gran Canaria</span>
+        <span><a href="mailto:contacto@samuelponce.es">contacto@samuelponce.es</a></span>
+        <span>+34 691 18 99 61</span>
+      </p>
+      <p class="contact">
+        <span><a href="https://samuelponce.es">samuelponce.es</a></span>
+        <span><a href="https://github.com/s-pl">github.com/s-pl</a></span>
+        <span><a href="https://www.linkedin.com/in/samuel-ponce-luna-aba75b2b8">LinkedIn</a></span>
+      </p>
+    </header>
+
+    <section>
+      <h2>perfil</h2>
+      <p class="summary">
+        Full stack con foco en agentes IA en producción. En WorkFactory diseñé y construí el agente IA de un SaaS
+        hotelero, desde el runtime y sus tools hasta la bandeja donde el equipo revisa lo que propone. Antes, en
+        C-Link (Londres), trabajé con pipelines LLM, workers asíncronos y observabilidad en producción.
+      </p>
+    </section>
+
+    <section>
+      <h2>experiencia</h2>
+
+      <div class="job">
+        <div class="job-head">
+          <p class="job-title">
+            Full-Stack &amp; AI Engineer <span class="company">· WorkFactory</span><span class="tag">actual</span>
+          </p>
+          <p class="period">jun. 2026 – actualidad</p>
+        </div>
+        <p class="meta">SaaS de gestión hotelera y alquiler vacacional</p>
+        <ul>
+          <li>Diseñé y construí desde cero el agente IA: Python, pydantic-ai, FastAPI, estado en Postgres y trazas en Langfuse.</li>
+          <li>El agente solo afirma datos que ha devuelto una tool; si algo no cuadra, falla cerrado y no se envía.</li>
+          <li>Modo revisión de punta a punta: la IA propone una respuesta o acción y una persona la aprueba, corrige o descarta.</li>
+          <li>Tools filtradas por rol y elegidas por similitud semántica, con acciones idempotentes sobre una máquina de estados.</li>
+          <li>SQL de solo lectura para el agente: un parser que solo admite un SELECT y vistas filtradas por organización.</li>
+          <li>Bandeja de conversaciones en Angular (WhatsApp, email y voz por reserva) y modo voz del panel en Go con WebRTC.</li>
+        </ul>
+        <div class="chips">
+          <span>Python</span><span>FastAPI</span><span>pydantic-ai</span><span>TypeScript</span><span>Node.js</span><span>Angular</span><span>Go</span><span>PostgreSQL</span><span>Redis</span><span>WebRTC</span><span>Langfuse</span>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <p class="job-title">Full Stack Developer <span class="company">· C-Link</span><span class="tag">erasmus</span></p>
+          <p class="period">ene. 2026 – may. 2026</p>
+        </div>
+        <p class="meta">Londres, Reino Unido · startup de IA para licitaciones de construcción</p>
+        <ul>
+          <li>Módulo de análisis de Bills of Quantities de principio a fin: esquema, API REST privada, pipeline Celery y tests.</li>
+          <li>Contabilidad de coste y consumo de tokens LLM por tipo de análisis.</li>
+          <li>New Relic APM en producción (trazas distribuidas, métricas y alertas), junto a Sentry para errores.</li>
+          <li>Corrección de una race condition en workers Celery con late acknowledgement y refactor de la ingesta.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <p class="job-title">Desarrollador Web <span class="company">· Astican</span><span class="tag">prácticas</span></p>
+          <p class="period">2025</p>
+        </div>
+        <p class="meta">Las Palmas de Gran Canaria · sector naval</p>
+        <p class="desc">Aplicaciones internas: nuevas funcionalidades sobre el stack existente y reducción de deuda técnica.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>proyectos</h2>
+      <div class="projects">
+        <div class="project">
+          <p class="project-name">lightq-node<span class="kind">npm</span></p>
+          <p>Cola de trabajos en memoria sin dependencias: concurrencia, prioridades, reintentos con backoff y cancelación.</p>
+          <p class="stack">Node.js · TypeScript</p>
+        </div>
+        <div class="project">
+          <p class="project-name">cron-scheduler-ts<span class="kind">npm</span></p>
+          <p>Scheduler cron sin dependencias, con persistencia intercambiable, detección de jobs perdidos y sin drift.</p>
+          <p class="stack">Node.js · TypeScript</p>
+        </div>
+        <div class="project">
+          <p class="project-name">envshare</p>
+          <p>Reparto seguro de variables de entorno entre equipos: cifrado, TTL por secreto y acceso de un solo uso.</p>
+          <p class="stack">Next.js · TypeScript · Redis</p>
+        </div>
+        <div class="project">
+          <p class="project-name">EzPass</p>
+          <p>Transferencia de archivos P2P en tiempo real entre móvil y escritorio, sin registro ni instalación.</p>
+          <p class="stack">Node.js · Socket.IO</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>stack</h2>
+      <dl class="skills">
+        <dt>backend</dt>
+        <dd>Python, FastAPI, Node.js, TypeScript, Express, Go, Celery</dd>
+        <dt>frontend</dt>
+        <dd>Angular, React, Next.js, Tailwind CSS</dd>
+        <dt>datos</dt>
+        <dd>PostgreSQL, pgvector, Redis, MySQL, MongoDB</dd>
+        <dt>ia</dt>
+        <dd>Agentes LLM, pydantic-ai, búsqueda semántica, OpenRouter, Claude API, Langfuse</dd>
+        <dt>infra</dt>
+        <dd>Docker, Linux, GitHub Actions, Vercel, OpenTelemetry, New Relic, Sentry</dd>
+      </dl>
+    </section>
+
+    <section class="two-col">
+      <div>
+        <h2>formación</h2>
+        <p class="item-title">Técnico Superior en Desarrollo de Aplicaciones Web (DAW)</p>
+        <p class="meta">IES El Rincón · Las Palmas de Gran Canaria · 2023 – 2026</p>
+      </div>
+      <div>
+        <h2>idiomas</h2>
+        <p class="item-title">Español <span class="meta">nativo</span></p>
+        <p class="item-title">Inglés <span class="meta">B2 · EOI</span></p>
+      </div>
+    </section>
+  </body>
+</html>
