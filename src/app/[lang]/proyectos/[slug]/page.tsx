@@ -117,7 +117,7 @@ export default async function ProjectPage({
             <div className="space-y-6">
               {content.diagrams.map(({ title, definition }) => (
                 <div key={title}>
-                  <p className="font-mono text-xs text-muted-foreground/60 mb-2">// {title}</p>
+                  <p className="font-mono text-xs text-muted-foreground/60 mb-2">{"// "}{title}</p>
                   <MermaidDiagram definition={definition} />
                 </div>
               ))}

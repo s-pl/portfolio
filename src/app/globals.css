@@ -296,3 +296,35 @@ html.dark .shiki span {
     content: "";
   }
 }
+
+/* Robot de Hebra: parpadea y salta un poco al pasar por encima de su proyecto */
+@media (prefers-reduced-motion: no-preference) {
+  .hebra-eye {
+    animation: hebra-eye 3.6s steps(1) infinite;
+  }
+  .hebra-ant {
+    animation: hebra-ant 0.8s steps(1) infinite;
+  }
+  .group:hover .hebra-bot {
+    animation: hebra-bob 0.9s steps(2) infinite;
+  }
+}
+
+@keyframes hebra-eye {
+  95%,
+  98% {
+    opacity: 0;
+  }
+}
+
+@keyframes hebra-ant {
+  50% {
+    fill: #6b5a2e;
+  }
+}
+
+@keyframes hebra-bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}

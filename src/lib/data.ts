@@ -231,6 +231,60 @@ export const PROJECTS: Record<Lang, Project[]> = {
       },
     },
     {
+      slug: "hebra",
+      title: "Hebra",
+      tag: "new",
+      desc: "Control de versiones pensado para repos donde trabajan varias personas y muchos agentes de código a la vez. Hace todo lo que hace Git, habla con remotos Git y tiene su propio servidor y hub web.",
+      tech: ["Rust", "TypeScript", "Next.js", "tree-sitter", "PostgreSQL", "NATS", "MCP"],
+      href: "https://github.com/s-pl/hebra",
+      content: {
+        problem:
+          "Git está hecho para personas que se turnan. Los agentes no se turnan. Con varios agentes de código en el mismo repo me encontraba siempre lo mismo: agentes que se pisan, conflictos que paran todo, index.lock, prompts de credenciales interactivos, ruido de CRLF/LF y archivos generados que se cuelan en los commits.",
+        architecture:
+          "Workspace en Rust. hebra-core tiene el almacén de objetos direccionado por contenido (árboles Merkle con BLAKE3 y packs con compresión delta), el working copy, el merge y el log de operaciones. hb es la CLI y también un servidor MCP. hebra-server es una API HTTP en axum con identidad, mandatos por agente (Biscuit), reviews, tareas y checks, sobre PostgreSQL, NATS JetStream y almacenamiento S3. El hub web en Next.js enseña el historial con el agente que hay detrás de cada cambio.",
+        decisions: [
+          "Sin staging area: el working copy es el cambio. Un agente no tiene que gestionar un índice que no entiende.",
+          "Los comandos no cogen locks. Leen el estado, hacen su trabajo y publican en una transacción corta; si otro publicó entretanto, los dos resultados se mergean. Con 500 agentes en paralelo: 1.500 comandos y 0 fallos.",
+          "Los conflictos se guardan como datos y el trabajo sigue. El merge es estructural con tree-sitter (18 gramáticas, 30 con extra-grammars) y detecta renombrados.",
+          "Cada cambio lleva su procedencia: persona, agente, tarea, sesión y prompt. Al exportar a Git viaja como trailers del commit.",
+          "Credenciales que se pueden recortar offline: una persona le da a cada agente un mandato con TTL que nunca puede mover ramas protegidas.",
+          "Todo comando acepta --json con códigos de error estables, y hb mcp expone Hebra por Model Context Protocol.",
+        ],
+        links: [
+          { label: "web", href: "https://s-pl.github.io/hebra" },
+          { label: "releases", href: "https://github.com/s-pl/hebra/releases" },
+        ],
+        diagrams: [
+          {
+            title: "arquitectura",
+            definition: `flowchart LR
+    A["agentes y personas"] --> B["hb CLI\n--json + MCP"]
+    B --> C["hebra-core\nobjetos Merkle BLAKE3\nop log, merge, working copy"]
+    B -->|push / pull| D["hebra-server\naxum + mandatos Biscuit"]
+    B <-->|remotos Git| G["GitHub / Git"]
+    D --> E[("PostgreSQL")]
+    D --> F["NATS JetStream\neventos en vivo"]
+    D --> H[("S3\nobjetos cifrados")]
+    I["hub web\nNext.js"] --> D`,
+          },
+          {
+            title: "comandos en paralelo sin locks",
+            definition: `flowchart TD
+    A["comando en workspace A"] --> B["lee el estado\nsin lock"]
+    C["comando en workspace B"] --> D["lee el estado\nsin lock"]
+    B --> E["hace su trabajo"]
+    D --> F["hace su trabajo"]
+    E --> G["publica en\ntransacción corta"]
+    F --> G
+    G --> H{"alguien publicó\nentretanto?"}
+    H -- no --> I["listo"]
+    H -- si --> J["merge de los dos resultados\nnada se pierde"]
+    J --> I`,
+          },
+        ],
+      },
+    },
+    {
       slug: "envshare",
       title: "envshare",
       desc: "Herramienta web para distribuir variables de entorno entre equipos de forma segura: cifrado en tránsito, TTL por secreto y acceso de un solo uso.",
@@ -446,6 +500,60 @@ export const PROJECTS: Record<Lang, Project[]> = {
       },
     },
     {
+      slug: "hebra",
+      title: "Hebra",
+      tag: "new",
+      desc: "Version control for repos where people and many coding agents work at the same time. It does everything Git does, talks to Git remotes and has its own server and web hub.",
+      tech: ["Rust", "TypeScript", "Next.js", "tree-sitter", "PostgreSQL", "NATS", "MCP"],
+      href: "https://github.com/s-pl/hebra",
+      content: {
+        problem:
+          "Git was built for people taking turns. Agents don't take turns. Running several coding agents on the same repo, I kept hitting the same walls: agents overwriting each other, conflicts that stop everything, index.lock, interactive credential prompts, CRLF/LF noise and generated files sneaking into commits.",
+        architecture:
+          "A Rust workspace. hebra-core holds the content-addressed object store (Merkle trees with BLAKE3 and delta-compressed packs), the working copy, merge and the operation log. hb is the CLI and also an MCP server. hebra-server is an axum HTTP API with identity, per-agent mandates (Biscuit), reviews, tasks and checks, backed by PostgreSQL, NATS JetStream and S3 storage. The Next.js web hub shows history with the agent behind every change.",
+        decisions: [
+          "No staging area: the working copy is the change. An agent never has to manage an index it doesn't understand.",
+          "Commands don't take locks. They read the state, do their work and publish in one short transaction; if someone else published meanwhile, both results are merged. With 500 agents in parallel: 1,500 commands and 0 failures.",
+          "Conflicts are stored as data and work carries on. Merge is structural with tree-sitter (18 grammars, 30 with extra-grammars) and rename-aware.",
+          "Every change carries its provenance: person, agent, task, session and prompt. On export to Git it travels as commit trailers.",
+          "Credentials you can narrow offline: a person hands each agent a mandate with a TTL that can never move protected branches.",
+          "Every command takes --json with stable error codes, and hb mcp serves Hebra over the Model Context Protocol.",
+        ],
+        links: [
+          { label: "website", href: "https://s-pl.github.io/hebra" },
+          { label: "releases", href: "https://github.com/s-pl/hebra/releases" },
+        ],
+        diagrams: [
+          {
+            title: "architecture",
+            definition: `flowchart LR
+    A["agents and people"] --> B["hb CLI\n--json + MCP"]
+    B --> C["hebra-core\nBLAKE3 Merkle objects\nop log, merge, working copy"]
+    B -->|push / pull| D["hebra-server\naxum + Biscuit mandates"]
+    B <-->|Git remotes| G["GitHub / Git"]
+    D --> E[("PostgreSQL")]
+    D --> F["NATS JetStream\nlive events"]
+    D --> H[("S3\nencrypted objects")]
+    I["web hub\nNext.js"] --> D`,
+          },
+          {
+            title: "parallel commands without locks",
+            definition: `flowchart TD
+    A["command in workspace A"] --> B["reads state\nno lock"]
+    C["command in workspace B"] --> D["reads state\nno lock"]
+    B --> E["does its work"]
+    D --> F["does its work"]
+    E --> G["publishes in\none short transaction"]
+    F --> G
+    G --> H{"someone published\nmeanwhile?"}
+    H -- no --> I["done"]
+    H -- yes --> J["merge both results\nnothing is lost"]
+    J --> I`,
+          },
+        ],
+      },
+    },
+    {
       slug: "envshare",
       title: "envshare",
       desc: "Web tool for securely distributing environment variables across teams: in-transit encryption, per-secret TTL, and single-use access.",
@@ -616,7 +724,7 @@ export const EXPERIENCE: Record<Lang, Experience[]> = {
 };
 
 export const STACK: Record<string, string[]> = {
-  backend: ["Python", "Node.js", "Go", "FastAPI", "Flask", "Express", "Celery", "REST APIs"],
+  backend: ["Python", "Node.js", "Go", "Rust", "FastAPI", "Flask", "Express", "Celery", "REST APIs"],
   databases: ["PostgreSQL", "pgvector", "MySQL", "Redis", "MongoDB", "SQLite", "Firebase"],
   frontend: ["React", "Next.js", "Angular", "TypeScript", "Tailwind CSS", "shadcn/ui", "Framer Motion", "Zustand"],
   devops: ["Docker", "Linux", "Git", "GitHub Actions", "Vercel", "New Relic APM", "Sentry"],
@@ -643,6 +751,11 @@ export const STACK_LABELS: Record<Lang, Record<string, string>> = {
 export const EDUCATION: Record<Lang, Education[]> = {
   es: [
     {
+      degree: "Máster Big Data, Data Science & Inteligencia Artificial",
+      institution: "Universidad Complutense de Madrid (UCM)",
+      period: "2026 – actualidad",
+    },
+    {
       degree: "Técnico Superior en Desarrollo de Aplicaciones Web (DAW)",
       institution: "IES El Rincón · Las Palmas de Gran Canaria",
       period: "2023 – 2026",
@@ -650,6 +763,11 @@ export const EDUCATION: Record<Lang, Education[]> = {
     },
   ],
   en: [
+    {
+      degree: "Master's in Big Data, Data Science & Artificial Intelligence",
+      institution: "Universidad Complutense de Madrid (UCM)",
+      period: "2026 – present",
+    },
     {
       degree: "Higher National Diploma in Web Application Development",
       institution: "IES El Rincón · Las Palmas de Gran Canaria",

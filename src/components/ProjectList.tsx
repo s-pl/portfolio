@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import SectionLabel from "./SectionLabel";
+import HebraBot from "./HebraBot";
 import { useLangContext } from "@/components/LangProvider";
 import type { Project } from "@/lib/data";
 
@@ -64,6 +65,7 @@ function ProjectRow({
           ))}
         </div>
       </div>
+      {project.slug === "hebra" && <HebraBot className="hebra-bot mt-0.5" />}
       <ArrowUpRight
         size={15}
         className="text-muted-foreground group-hover:text-foreground transition-colors shrink-0 mt-0.5"
